@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import styled from "styled-components";
 import "../App.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -62,10 +62,19 @@ import { faCheck, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 // }
 // `;
 const SignUp = () => {
-  const [isValid, setIsValid] = useState(true);
-  const [touched, setTouched] = useState(false);
-
   //local state
+
+  const nameInput = useRef();
+  const idInput = useRef();
+  const passwordInput = useRef();
+  const phoneNumInput = useRef();
+  const emailInput = useRef();
+  const [touched, setTouched] = useState(false);
+  const [nameValid, setNameValid] = useState(false);
+  const [idValid, setIdValid] = useState(false);
+  const [passwordValid, setPasswordValid] = useState(false);
+  const [phoneNumValid, setPhoneNumValid] = useState(false);
+  const [emailValid, setEmailValid] = useState(false);
 
   const [inputValue, setInputValue] = useState({
     name: "",
@@ -76,75 +85,79 @@ const SignUp = () => {
   });
 
   //function
-  function onChangeName(e) {
+  const onChangeName = (e) => {
     setInputValue({
       ...inputValue,
       [e.target.name]: e.target.value,
     });
     // 이름은 3글자만
-    if (inputValue.name.length !== 3) {
-      console.log("3글자 아님");
-      setIsValid(false);
+    if (nameInput.current.value.length === 3) {
+      setNameValid(true);
     } else {
-      console.log("3글자");
-      setIsValid(true);
+      setNameValid(false);
     }
-  }
-  function onChangeId(e) {
+  };
+  const onChangeId = (e) => {
     setInputValue({
       ...inputValue,
       [e.target.name]: e.target.value,
     });
     // id 8글자 이상
-    if (inputValue.loginId.length < 8) {
-      console.log("8글자 아래");
-      setIsValid(false);
+    if (idInput.current.value.length >= 8) {
+      setIdValid(true);
     } else {
-      console.log("8글자 이상");
-      setIsValid(true);
+      setIdValid(false);
     }
-  }
-  function onChangePW(e) {
+  };
+  const onChangePW = (e) => {
     setInputValue({
       ...inputValue,
       [e.target.name]: e.target.value,
     });
     // Password 8글자 이상, 대문자 포함
     const regexPW = /[A-Z]+/;
-    if (inputValue.password.length > 8 && regexPW.test(inputValue.password)) {
+    if (
+      passwordInput.current.value.length > 8 &&
+      regexPW.test(inputValue.password)
+    ) {
+      setPasswordValid(true);
       console.log("8글자 이상 and 대문자 포함");
     } else {
+      setPasswordValid(false);
       console.log("8글자 아래 or 대문자 미포함");
     }
-  }
-  function onChangePN(e) {
+  };
+  const onChangePN = (e) => {
     setInputValue({
       ...inputValue,
       [e.target.name]: e.target.value,
     });
     const regexPN = /^\d{3}-\d{3,4}-\d{3,4}$/;
-    // id 8글자 이상
-    if (regexPN.test(inputValue.phoneNum)) {
+    // PN
+    if (regexPN.test(phoneNumInput.current.value)) {
+      // 하이픈 없이 숫자만
+      setPhoneNumValid(true);
       console.log("가능");
     } else {
+      setPhoneNumValid(false);
       console.log("불가능");
     }
-  }
-  function onChangeEmail(e) {
+    console.log(phoneNumInput.current.value);
+  };
+  const onChangeEmail = (e) => {
     setInputValue({
       ...inputValue,
       [e.target.name]: e.target.value,
     });
     const regexEmail =
       /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
-    setIsValid(false);
     // email
-    if (regexEmail.test(inputValue.email)) {
-      console.log("가능");
+    if (regexEmail.test(emailInput.current.value)) {
+      setEmailValid(true);
     } else {
-      console.log("불가능");
+      setEmailValid(false);
     }
-  }
+  };
   return (
     <>
       <div className="sign-up-wrapper">
@@ -164,44 +177,54 @@ const SignUp = () => {
                   className="sign-up-input sign-up-input-pw"
                   placeholder="NAME"
                   name="name"
+                  ref={nameInput}
                   value={inputValue.name}
                   onChange={onChangeName}
                   onBlur={() => setTouched(true)}
                 />
-                <FontAwesomeIcon
-                  icon={faCheck}
-                  className={
-                    touched
-                      ? isValid
-                        ? "faCheck valid"
-                        : "faCheck"
-                      : "faCheck"
-                  }
-                />
-                <FontAwesomeIcon
-                  icon={faCircleXmark}
-                  className={
-                    touched
-                      ? isValid
-                        ? "faCircleXmark"
-                        : "faCircleXmark invalid"
-                      : "faCircleXmark"
-                  }
-                />
+                {touched ? (
+                  <>
+                    <FontAwesomeIcon
+                      icon={faCheck}
+                      className={nameValid ? "faCheck valid" : "faCheck"}
+                    />
+                    <FontAwesomeIcon
+                      icon={faCircleXmark}
+                      className={
+                        nameValid ? "faCircleXmark" : "faCircleXmark invalid"
+                      }
+                    />
+                  </>
+                ) : (
+                  <></>
+                )}
               </div>
               <div>
                 <input
                   className="sign-up-input sign-up-input-id"
                   placeholder="ID"
                   name="loginId"
+                  ref={idInput}
                   value={inputValue.loginId}
                   onChange={onChangeId}
+                  onBlur={() => setTouched(true)}
                 />
-                <FontAwesomeIcon icon={faCheck} className="faCheck" />
-                <FontAwesomeIcon
-                  icon={faCircleXmark}
-                  className="faCircleXmark"
-                />
+                {touched ? (
+                  <>
+                    <FontAwesomeIcon
+                      icon={faCheck}
+                      className={idValid ? "faCheck valid" : "faCheck"}
+                    />
+                    <FontAwesomeIcon
+                      icon={faCircleXmark}
+                      className={
+                        idValid ? "faCircleXmark" : "faCircleXmark invalid"
+                      }
+                    />
+                  </>
+                ) : (
+                  <></>
+                )}
               </div>
               <div>
                 <input
@@ -209,14 +232,29 @@ const SignUp = () => {
                   placeholder="PASSWORD"
                   type="password"
                   name="password"
+                  ref={passwordInput}
                   value={inputValue.password}
                   onChange={onChangePW}
+                  onBlur={() => setTouched(true)}
                 />
-                <FontAwesomeIcon icon={faCheck} className="faCheck" />
-                <FontAwesomeIcon
-                  icon={faCircleXmark}
-                  className="faCircleXmark"
-                />
+                {touched ? (
+                  <>
+                    <FontAwesomeIcon
+                      icon={faCheck}
+                      className={passwordValid ? "faCheck valid" : "faCheck"}
+                    />
+                    <FontAwesomeIcon
+                      icon={faCircleXmark}
+                      className={
+                        passwordValid
+                          ? "faCircleXmark"
+                          : "faCircleXmark invalid"
+                      }
+                    />
+                  </>
+                ) : (
+                  <></>
+                )}
               </div>
               <div>
                 <input
@@ -224,14 +262,29 @@ const SignUp = () => {
                   placeholder="PHONENUMBER        ex)000-0000-0000"
                   name="phoneNum"
                   type="number"
+                  ref={phoneNumInput}
                   value={inputValue.phoneNum}
                   onChange={onChangePN}
+                  onBlur={() => setTouched(true)}
                 />
-                <FontAwesomeIcon icon={faCheck} className="faCheck" />
-                <FontAwesomeIcon
-                  icon={faCircleXmark}
-                  className="faCircleXmark"
-                />
+                {touched ? (
+                  <>
+                    <FontAwesomeIcon
+                      icon={faCheck}
+                      className={phoneNumValid ? "faCheck valid" : "faCheck"}
+                    />
+                    <FontAwesomeIcon
+                      icon={faCircleXmark}
+                      className={
+                        phoneNumValid
+                          ? "faCircleXmark"
+                          : "faCircleXmark invalid"
+                      }
+                    />
+                  </>
+                ) : (
+                  <></>
+                )}
               </div>
               <div>
                 <input
@@ -239,14 +292,27 @@ const SignUp = () => {
                   placeholder="EMAIL"
                   name="email"
                   type="email"
+                  ref={emailInput}
                   value={inputValue.email}
                   onChange={onChangeEmail}
+                  onBlur={() => setTouched(true)}
                 />
-                <FontAwesomeIcon icon={faCheck} className="faCheck" />
-                <FontAwesomeIcon
-                  icon={faCircleXmark}
-                  className="faCircleXmark"
-                />
+                {touched ? (
+                  <>
+                    <FontAwesomeIcon
+                      icon={faCheck}
+                      className={emailValid ? "faCheck valid" : "faCheck"}
+                    />
+                    <FontAwesomeIcon
+                      icon={faCircleXmark}
+                      className={
+                        emailValid ? "faCircleXmark" : "faCircleXmark invalid"
+                      }
+                    />
+                  </>
+                ) : (
+                  <></>
+                )}
               </div>
             </div>
             <div className="sign-up-form-other">
