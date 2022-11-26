@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 const SignInStyle = styled.div`
   .login-wrapper {
@@ -62,6 +63,10 @@ const SignInStyle = styled.div`
 `;
 
 const SignIn = () => {
+  //global state
+  const dispatch = useDispatch();
+  const pageIndex = useSelector((state) => state.pageIndex);
+
   //local state
   const navigate = useNavigate();
   const [inputValue, setInputValue] = useState({
@@ -77,13 +82,16 @@ const SignIn = () => {
   }
 
   function onClickSignUp() {
-    navigate("/SignUp");
+    dispatch({ type: "SIGNUP" });
   }
   return (
     <>
       <SignInStyle>
         <div className="login-wrapper">
-          <div className="login-body">
+          <div
+            className="login-body"
+            style={{ transform: `translateX(${-pageIndex * 100}vw)` }}
+          >
             <div className="login-form">
               <div className="login-form-main">
                 <div className="login-form-title">Great to see you again !</div>

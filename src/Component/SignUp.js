@@ -3,67 +3,112 @@ import styled from "styled-components";
 import "../App.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import { useSelector } from "react-redux";
 
-// const SignUpStyle = styled.div`
-// .sign-up-wrapper {
-// }
-// .sign-up-body {
-//   background-color: #fff;
-//   position: absolute;
-//   margin: auto;
-//   top: 0;
-//   bottom: 0;
-//   left: 0;
-//   right: 0;
-//   text-align: center;
-//   width: 400px;
-//   height: 520px;
-//   border-radius: 10px;
-// }
-// .sign-up-form {
-//   width: 235px;
-//   padding: 40px;
-//   margin: auto;
-// }
-// .sign-up-form-main div {
-//   margin-bottom: 20px;
-// }
-// .sign-up-form-other div {
-//   margin-bottom: 10px;
-// }
-// .sign-up-form-title {
-//   font-size: 22px;
-// }
-// .sign-up-input {
-//   font-size: 12px;
-//   width: 235px;
-//   height: 35px;
-//   border: none;
-//   border-bottom: 1px solid #000;
-//   border-radius: 2px;
-//   border-color: rgba(0, 0, 0, 0.243);
-//   outline: none;
-// }
-// .sign-up button {
-//   background-color: #1b2866;
-//   border-radius: 3px;
-//   color: #fff;
-//   border: none;
-//   width: 238px;
-//   height: 35px;
-// }
-// .sign-up-form-help {
-//   display: flex;
-//   justify-content: space-between;
+const SignUpStyle = styled.div`
+  .sign-up-body {
+    display: flex;
+    overflow: hidden;
+    background-color: #fff;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    width: 700px;
+    height: 520px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 15px rgba(217, 217, 217, 0.451);
+  }
+  .sign-up-holder-container {
+    display: flex;
+    flex-direction: column;
+    background-color: #16215d;
+    padding: 20px;
+    width: 40%;
+    text-align: left;
+  }
+  .sign-up-holder {
+    display: flex;
+    flex-direction: column;
+    margin: 100px 0;
+    align-items: left;
+    color: #fff;
+  }
+  .sign-up-holder-title {
+    font-size: 30px;
+  }
+  .sign-up-holder-subtitle {
+    font-size: 20px;
+  }
+  .sign-up-form {
+    width: 60%;
+    padding: 40px;
+    margin: auto;
+  }
+  .sign-up-form-main div {
+    margin-bottom: 20px;
+  }
+  .sign-up-form-other div {
+    margin-bottom: 10px;
+  }
+  .sign-up-form-title {
+    font-size: 22px;
+  }
+  .sign-up-input {
+    font-size: 12px;
+    width: 235px;
+    height: 35px;
+    border: none;
+    border-bottom: 1px solid #000;
+    border-radius: 2px;
+    border-color: rgba(0, 0, 0, 0.243);
+    outline: none;
+  }
+  .sign-up button {
+    background-color: #1b2866;
+    border-radius: 3px;
+    color: #fff;
+    border: none;
+    width: 238px;
+    height: 35px;
+    cursor: pointer;
+  }
+  .sign-up-form-help {
+    display: flex;
+    justify-content: space-between;
 
-//   font-size: 11px;
-//   font-weight: bold;
-//   color: #1b2866cd;
-// }
-// `;
+    font-size: 11px;
+    font-weight: bold;
+    color: #1b2866cd;
+  }
+  /* fontawesome */
+  .faCheck {
+    opacity: 0;
+    position: absolute;
+    transform: translate(-15px, 10px);
+    color: rgb(26, 157, 26);
+  }
+  .valid {
+    opacity: 1;
+  }
+  .faCircleXmark {
+    opacity: 0;
+    position: absolute;
+    transform: translate(-15px, 10px);
+    color: rgb(210, 3, 3);
+  }
+  .invalid {
+    opacity: 1;
+  }
+`;
 const SignUp = () => {
+  //global state
+  const pageIndex = useSelector((state) => state.pageIndex);
   //local state
-
+  //FIX
   const nameInput = useRef();
   const idInput = useRef();
   const passwordInput = useRef();
@@ -75,7 +120,6 @@ const SignUp = () => {
   const [passwordValid, setPasswordValid] = useState(false);
   const [phoneNumValid, setPhoneNumValid] = useState(false);
   const [emailValid, setEmailValid] = useState(false);
-
   const [inputValue, setInputValue] = useState({
     name: "",
     loginId: "",
@@ -83,8 +127,14 @@ const SignUp = () => {
     phoneNum: "",
     email: "",
   });
+  console.log(pageIndex);
 
   //function
+  const handleSubmit = () => {
+    console.log(inputValue);
+    // 중복 검사
+  };
+
   const onChangeName = (e) => {
     setInputValue({
       ...inputValue,
@@ -132,7 +182,7 @@ const SignUp = () => {
       ...inputValue,
       [e.target.name]: e.target.value,
     });
-    const regexPN = /^\d{3}-\d{3,4}-\d{3,4}$/;
+    const regexPN = /^01([0|1|6|7|8|9]?)-?([0-9]{4})-?([0-9]{4})$/;
     // PN
     if (regexPN.test(phoneNumInput.current.value)) {
       // 하이픈 없이 숫자만
@@ -159,9 +209,12 @@ const SignUp = () => {
     }
   };
   return (
-    <>
+    <SignUpStyle>
       <div className="sign-up-wrapper">
-        <div className="sign-up-body">
+        <div
+          className="sign-up-body"
+          style={{ transform: `translateX(${-pageIndex * 100 - 100}vw)` }}
+        >
           <div className="sign-up-holder-container">
             <div className="sign-up-holder-icon">icon</div>
             <div className="sign-up-holder">
@@ -259,9 +312,8 @@ const SignUp = () => {
               <div>
                 <input
                   className="sign-up-input sign-up-input-pw"
-                  placeholder="PHONENUMBER        ex)000-0000-0000"
+                  placeholder="PHONENUMBER 숫자만"
                   name="phoneNum"
-                  type="number"
                   ref={phoneNumInput}
                   value={inputValue.phoneNum}
                   onChange={onChangePN}
@@ -317,13 +369,13 @@ const SignUp = () => {
             </div>
             <div className="sign-up-form-other">
               <div className="sign-up">
-                <button>Sign Up</button>
+                <button onClick={() => handleSubmit()}>Sign Up</button>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </>
+    </SignUpStyle>
   );
 };
 
