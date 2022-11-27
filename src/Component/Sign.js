@@ -45,6 +45,7 @@ const SignStyle = styled.div`
     width: 7px;
     height: 7px;
     margin: 0 5px;
+    cursor: pointer;
   }
 `;
 const Sign = () => {
@@ -54,6 +55,9 @@ const Sign = () => {
   //global function
   function onClickSignUp() {
     dispatch({ type: "SIGNUP" });
+  }
+  function onClickSignIn() {
+    dispatch({ type: "SIGNIN" });
   }
   function onClickForgotPW() {
     dispatch({ type: "FORGOTPW" });
@@ -72,9 +76,9 @@ const Sign = () => {
           <span style={{ transform: `translateX(${pageIndex * 19}px)` }}></span>
         </div>
         <div className="current-page-fix">
-          <span></span>
-          <span></span>
-          <span></span>
+          <span onClick={onClickSignUp}></span>
+          <span onClick={onClickSignIn}></span>
+          <span onClick={onClickForgotPW}></span>
         </div>
       </div>
     </SignStyle>
