@@ -1,6 +1,5 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 const SignInStyle = styled.div`
@@ -19,6 +18,8 @@ const SignInStyle = styled.div`
     height: 320px;
     border-radius: 10px;
     box-shadow: 2px 2px 30px rgba(217, 217, 217, 0.451);
+    transform: translateX(0vw);
+    transition: 1s;
   }
   .login-form {
     width: 235px;
@@ -60,6 +61,11 @@ const SignInStyle = styled.div`
     font-weight: bold;
     color: #1b2866cd;
   }
+
+  .sign-up,
+  .forgot-pw {
+    cursor: pointer;
+  }
 `;
 
 const SignIn = () => {
@@ -68,11 +74,12 @@ const SignIn = () => {
   const pageIndex = useSelector((state) => state.pageIndex);
 
   //local state
-  const navigate = useNavigate();
   const [inputValue, setInputValue] = useState({
     loginId: "",
     password: "",
   });
+
+  //function
   function onChange(e) {
     setInputValue({
       ...inputValue,
@@ -83,6 +90,10 @@ const SignIn = () => {
 
   function onClickSignUp() {
     dispatch({ type: "SIGNUP" });
+  }
+
+  function onClickForgotPW() {
+    dispatch({ type: "FORGOTPW" });
   }
   return (
     <>
@@ -123,7 +134,9 @@ const SignIn = () => {
                   <span className="sign-up" onClick={onClickSignUp}>
                     SIGN UP
                   </span>
-                  <span className="forgot-pw">FORGOT PASSWORD ?</span>
+                  <span className="forgot-pw" onClick={onClickForgotPW}>
+                    FORGOT PASSWORD ?
+                  </span>
                 </div>
               </div>
             </div>

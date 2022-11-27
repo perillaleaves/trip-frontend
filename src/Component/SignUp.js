@@ -21,6 +21,8 @@ const SignUpStyle = styled.div`
     height: 520px;
     border-radius: 10px;
     box-shadow: 2px 2px 15px rgba(217, 217, 217, 0.451);
+    transform: translateX(-100vw);
+    transition: 1s;
   }
   .sign-up-holder-container {
     display: flex;
@@ -84,6 +86,7 @@ const SignUpStyle = styled.div`
     font-weight: bold;
     color: #1b2866cd;
   }
+
   /* fontawesome */
   .faCheck {
     opacity: 0;
@@ -127,7 +130,6 @@ const SignUp = () => {
     phoneNum: "",
     email: "",
   });
-  console.log(pageIndex);
 
   //function
   const handleSubmit = () => {

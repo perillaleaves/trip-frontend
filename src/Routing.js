@@ -18,6 +18,9 @@ function reducer(currentState, action) {
   if (action.type === "SIGNUP") {
     newState.pageIndex = -1;
   }
+  if (action.type === "FORGOTPW") {
+    newState.pageIndex = +1;
+  }
   return newState;
 }
 const store = createStore(reducer);
