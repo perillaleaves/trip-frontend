@@ -52,6 +52,7 @@ const SignInStyle = styled.div`
     border: none;
     width: 238px;
     height: 35px;
+    cursor: pointer;
   }
   .login-form-help {
     display: flex;
@@ -86,6 +87,8 @@ const SignIn = ({ onClickSignUp, onClickForgotPW }) => {
     });
     console.log(inputValue);
   }
+  // function onClickSignIn() {
+  // }
 
   return (
     <>
@@ -120,7 +123,13 @@ const SignIn = ({ onClickSignUp, onClickForgotPW }) => {
               </div>
               <div className="login-form-other">
                 <div className="sign-in">
-                  <button>Sign in</button>
+                  <button
+                    onClick={() => {
+                      console.log(inputValue);
+                    }}
+                  >
+                    Sign in
+                  </button>
                 </div>
                 <div className="login-form-help">
                   <span className="sign-up" onClick={onClickSignUp}>
