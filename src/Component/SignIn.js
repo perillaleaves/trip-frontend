@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 const SignInStyle = styled.div`
   .login-wrapper {
@@ -68,9 +68,8 @@ const SignInStyle = styled.div`
   }
 `;
 
-const SignIn = () => {
+const SignIn = ({ onClickSignUp, onClickForgotPW }) => {
   //global state
-  const dispatch = useDispatch();
   const pageIndex = useSelector((state) => state.pageIndex);
 
   //local state
@@ -88,13 +87,6 @@ const SignIn = () => {
     console.log(inputValue);
   }
 
-  function onClickSignUp() {
-    dispatch({ type: "SIGNUP" });
-  }
-
-  function onClickForgotPW() {
-    dispatch({ type: "FORGOTPW" });
-  }
   return (
     <>
       <SignInStyle>

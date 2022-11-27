@@ -2,7 +2,7 @@ import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import styled from "styled-components";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 const SignStyle = styled.div`
   .current-page-wrapper {
     justify-content: center;
@@ -49,12 +49,23 @@ const SignStyle = styled.div`
 `;
 const Sign = () => {
   const pageIndex = useSelector((state) => state.pageIndex);
-  console.log(pageIndex);
+  const dispatch = useDispatch();
+
+  //global function
+  function onClickSignUp() {
+    dispatch({ type: "SIGNUP" });
+  }
+  function onClickForgotPW() {
+    dispatch({ type: "FORGOTPW" });
+  }
   return (
     <SignStyle>
       <div className="sign">
         <SignUp />
-        <SignIn />
+        <SignIn
+          onClickSignUp={onClickSignUp}
+          onClickForgotPW={onClickForgotPW}
+        />
       </div>
       <div className="current-page-wrapper">
         <div className="current-page">
