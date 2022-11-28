@@ -117,7 +117,14 @@ const SignUp = () => {
   const passwordInput = useRef();
   const phoneNumInput = useRef();
   const emailInput = useRef();
-  const [touched, setTouched] = useState(false);
+  // 반복되는 선언 줄이기
+  const [nameTouched, setNameTouched] = useState(false);
+  const [idTouched, setIdTouched] = useState(false);
+  const [passwordTouched, setPasswordTouched] = useState(false);
+  const [phoneNumTouched, setPhoneNumTouched] = useState(false);
+  const [emailTouched, setEmailTouched] = useState(false);
+
+  // 반복되는 선언 줄이기
   const [nameValid, setNameValid] = useState(false);
   const [idValid, setIdValid] = useState(false);
   const [passwordValid, setPasswordValid] = useState(false);
@@ -133,7 +140,17 @@ const SignUp = () => {
 
   //function
   const handleSubmit = () => {
-    console.log(inputValue);
+    if (
+      nameValid &&
+      idValid &&
+      passwordValid &&
+      phoneNumValid &&
+      emailValid === true
+    ) {
+      console.log(inputValue);
+    } else {
+      console.log("error");
+    }
     // 중복 검사
   };
 
@@ -173,10 +190,8 @@ const SignUp = () => {
       regexPW.test(inputValue.password)
     ) {
       setPasswordValid(true);
-      console.log("8글자 이상 and 대문자 포함");
     } else {
       setPasswordValid(false);
-      console.log("8글자 아래 or 대문자 미포함");
     }
   };
   const onChangePN = (e) => {
@@ -189,10 +204,8 @@ const SignUp = () => {
     if (regexPN.test(phoneNumInput.current.value)) {
       // 하이픈 없이 숫자만
       setPhoneNumValid(true);
-      console.log("가능");
     } else {
       setPhoneNumValid(false);
-      console.log("불가능");
     }
     console.log(phoneNumInput.current.value);
   };
@@ -235,9 +248,9 @@ const SignUp = () => {
                   ref={nameInput}
                   value={inputValue.name}
                   onChange={onChangeName}
-                  onBlur={() => setTouched(true)}
+                  onBlur={() => setNameTouched(true)}
                 />
-                {touched ? (
+                {nameTouched ? (
                   <>
                     <FontAwesomeIcon
                       icon={faCheck}
@@ -262,9 +275,9 @@ const SignUp = () => {
                   ref={idInput}
                   value={inputValue.loginId}
                   onChange={onChangeId}
-                  onBlur={() => setTouched(true)}
+                  onBlur={() => setIdTouched(true)}
                 />
-                {touched ? (
+                {idTouched ? (
                   <>
                     <FontAwesomeIcon
                       icon={faCheck}
@@ -290,9 +303,9 @@ const SignUp = () => {
                   ref={passwordInput}
                   value={inputValue.password}
                   onChange={onChangePW}
-                  onBlur={() => setTouched(true)}
+                  onBlur={() => setPasswordTouched(true)}
                 />
-                {touched ? (
+                {passwordTouched ? (
                   <>
                     <FontAwesomeIcon
                       icon={faCheck}
@@ -319,9 +332,9 @@ const SignUp = () => {
                   ref={phoneNumInput}
                   value={inputValue.phoneNum}
                   onChange={onChangePN}
-                  onBlur={() => setTouched(true)}
+                  onBlur={() => setPhoneNumTouched(true)}
                 />
-                {touched ? (
+                {phoneNumTouched ? (
                   <>
                     <FontAwesomeIcon
                       icon={faCheck}
@@ -349,9 +362,9 @@ const SignUp = () => {
                   ref={emailInput}
                   value={inputValue.email}
                   onChange={onChangeEmail}
-                  onBlur={() => setTouched(true)}
+                  onBlur={() => setEmailTouched(true)}
                 />
-                {touched ? (
+                {emailTouched ? (
                   <>
                     <FontAwesomeIcon
                       icon={faCheck}

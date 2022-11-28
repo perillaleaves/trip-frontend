@@ -32,8 +32,6 @@ const Routing = () => {
     <Provider store={store}>
       <Routes>
         <Route exact path="/*" element={<App />} />
-        <Route exact path="/signin" element={<SignIn />} />
-        <Route exact path="/signup" element={<SignUp />} />
         <Route exact path="/sign" element={<Sign />} />
       </Routes>
     </Provider>
