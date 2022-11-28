@@ -1,7 +1,7 @@
 import { useState } from "react";
-import styled from "styled-components";
 import { useSelector } from "react-redux";
-
+import styled from "styled-components";
+import API from "../API/Api.js";
 const SignInStyle = styled.div`
   .login-wrapper {
   }
@@ -126,6 +126,11 @@ const SignIn = ({ onClickSignUp, onClickForgotPW }) => {
                   <button
                     onClick={() => {
                       console.log(inputValue);
+                      API.signin(inputValue.loginId, inputValue.password).then(
+                        (data) => {
+                          console.log(data, "in button");
+                        }
+                      );
                     }}
                   >
                     Sign in
