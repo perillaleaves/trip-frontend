@@ -87,6 +87,46 @@ const SignUpStyle = styled.div`
     color: #1b2866cd;
   }
 
+  // input animate
+
+  .place-label {
+    position: absolute;
+    font-size: 12px;
+    color: #8c8c8c;
+    transform: translate(-238px, 12.5px);
+    transition: font 0.1s ease, top 0.1s ease, transform 0.1s ease;
+    pointer-events: none;
+  }
+
+  .sign-up-input-name:focus ~ .place-label-name,
+  .sign-up-input-name:valid ~ .place-label-name {
+    transform: translate(-238px, 0px);
+    font-size: 9px;
+  }
+
+  .sign-up-input-id:focus ~ .place-label-id,
+  .sign-up-input-id:valid ~ .place-label-id {
+    transform: translate(-238px, 0px);
+    font-size: 9px;
+  }
+  .sign-up-input-pw:focus ~ .place-label-pw,
+  .sign-up-input-pw:valid ~ .place-label-pw {
+    transform: translate(-238px, 0px);
+    font-size: 9px;
+  }
+
+  .sign-up-input-phoneNum:focus ~ .place-label-phoneNum,
+  .sign-up-input-phoneNum:valid ~ .place-label-phoneNum {
+    transform: translate(-238px, 0px);
+    font-size: 9px;
+  }
+
+  .sign-up-input-email:focus ~ .place-label-email,
+  .sign-up-input-email:valid ~ .place-label-email {
+    transform: translate(-238px, 0px);
+    font-size: 9px;
+  }
+
   /* fontawesome */
   .faCheck {
     opacity: 0;
@@ -240,15 +280,15 @@ const SignUp = () => {
           <div className="sign-up-form">
             <div className="sign-up-form-main">
               <div className="sign-up-form-title">Sign Up</div>
-              <div>
+              <div className="sign-up-form-name">
                 <input
-                  className="sign-up-input sign-up-input-pw"
-                  placeholder="NAME"
+                  className="sign-up-input sign-up-input-name"
                   name="name"
                   ref={nameInput}
                   value={inputValue.name}
                   onChange={onChangeName}
                   onBlur={() => setNameTouched(true)}
+                  required
                 />
                 {nameTouched ? (
                   <>
@@ -266,16 +306,17 @@ const SignUp = () => {
                 ) : (
                   <></>
                 )}
+                <span className="place-label place-label-name">NAME</span>
               </div>
               <div>
                 <input
                   className="sign-up-input sign-up-input-id"
-                  placeholder="ID"
                   name="loginId"
                   ref={idInput}
                   value={inputValue.loginId}
                   onChange={onChangeId}
                   onBlur={() => setIdTouched(true)}
+                  required
                 />
                 {idTouched ? (
                   <>
@@ -293,17 +334,18 @@ const SignUp = () => {
                 ) : (
                   <></>
                 )}
+                <span className="place-label place-label-id">ID</span>
               </div>
               <div>
                 <input
                   className="sign-up-input sign-up-input-pw"
-                  placeholder="PASSWORD"
                   type="password"
                   name="password"
                   ref={passwordInput}
                   value={inputValue.password}
                   onChange={onChangePW}
                   onBlur={() => setPasswordTouched(true)}
+                  required
                 />
                 {passwordTouched ? (
                   <>
@@ -323,16 +365,17 @@ const SignUp = () => {
                 ) : (
                   <></>
                 )}
+                <span className="place-label place-label-pw">PASSWORD</span>
               </div>
               <div>
                 <input
-                  className="sign-up-input sign-up-input-pw"
-                  placeholder="PHONENUMBER 숫자만"
+                  className="sign-up-input sign-up-input-phoneNum"
                   name="phoneNum"
                   ref={phoneNumInput}
                   value={inputValue.phoneNum}
                   onChange={onChangePN}
                   onBlur={() => setPhoneNumTouched(true)}
+                  required
                 />
                 {phoneNumTouched ? (
                   <>
@@ -352,17 +395,20 @@ const SignUp = () => {
                 ) : (
                   <></>
                 )}
+                <span className="place-label place-label-phoneNum">
+                  PHONENUMBER
+                </span>
               </div>
               <div>
                 <input
-                  className="sign-up-input sign-up-input-pw"
-                  placeholder="EMAIL"
+                  className="sign-up-input sign-up-input-email"
                   name="email"
                   type="email"
                   ref={emailInput}
                   value={inputValue.email}
                   onChange={onChangeEmail}
                   onBlur={() => setEmailTouched(true)}
+                  required
                 />
                 {emailTouched ? (
                   <>
@@ -380,6 +426,7 @@ const SignUp = () => {
                 ) : (
                   <></>
                 )}
+                <span className="place-label place-label-email">EMAIL</span>
               </div>
             </div>
             <div className="sign-up-form-other">
