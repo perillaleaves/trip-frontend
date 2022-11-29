@@ -4,6 +4,7 @@ import "../App.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { useSelector } from "react-redux";
+import API from "../API/Api";
 
 const SignUpStyle = styled.div`
   .sign-up-body {
@@ -180,17 +181,26 @@ const SignUp = () => {
 
   //function
   const handleSubmit = () => {
-    if (
-      nameValid &&
-      idValid &&
-      passwordValid &&
-      phoneNumValid &&
-      emailValid === true
-    ) {
-      console.log(inputValue);
-    } else {
-      console.log("error");
-    }
+    API.signup(
+      inputValue.name,
+      inputValue.loginId,
+      inputValue.password,
+      inputValue.phoneNum,
+      inputValue.email
+    ).then((data) => {
+      console.log(data);
+    });
+    // if (
+    //   nameValid &&
+    //   idValid &&
+    //   passwordValid &&
+    //   phoneNumValid &&
+    //   emailValid === true
+    // ) {
+    //   console.log(inputValue);
+    // } else {
+    //   console.log("error");
+    // }
     // 중복 검사
   };
 
@@ -431,7 +441,21 @@ const SignUp = () => {
             </div>
             <div className="sign-up-form-other">
               <div className="sign-up">
-                <button onClick={() => handleSubmit()}>Sign Up</button>
+                <button
+                  onClick={() => {
+                    API.signup(
+                      inputValue.name,
+                      inputValue.loginId,
+                      inputValue.password,
+                      inputValue.phoneNum,
+                      inputValue.email
+                    ).then((data) => {
+                      console.log(data);
+                    });
+                  }}
+                >
+                  Sign Up
+                </button>
               </div>
             </div>
           </div>
