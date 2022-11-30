@@ -180,17 +180,12 @@ const SignUp = () => {
     email: "",
   });
 
-  //function
-  // useEffect(() => {
-  //   const timer = setTimeout(() => console.log('Initial timeout!'), 1000);
-  //   return () => clearTimeout(timer);
-  // }, []);
   const handleSubmit = () => {
     if (
-      nameValid ||
-      idValid ||
-      passwordValid ||
-      phoneNumValid ||
+      nameValid &&
+      idValid &&
+      passwordValid &&
+      phoneNumValid &&
       emailValid === true
     ) {
       API.signup(
@@ -201,11 +196,13 @@ const SignUp = () => {
         inputValue.email
       ).then((data) => {
         if (data.status === 200) {
-          console.log("서버 통신 성공");
-          //1. 서버로 부터 중복체크 후 중복없으면 회원가입 성공
-          console.log("회원가입 성공");
-          //2. 중복 있으면 어느 부분이 중복이 되었는지 알림
-          console.log("회원가입 실패");
+          if (data.data.user) {
+            // success
+            console.log("회원가입 성공 !");
+          } else {
+            // error message
+            console.log(data.data.error.message);
+          }
         } else {
           console.log("서버 통신 실패");
         }
@@ -217,9 +214,8 @@ const SignUp = () => {
 
   const onClickIdCheck = () => {
     API.idoverlap(inputValue.loginId).then((data) => {
-      console.log(data);
+      console.log(data.data.message);
     });
-    console.log("hi");
   };
 
   const onChangeName = (e) => {
@@ -289,7 +285,6 @@ const SignUp = () => {
     } else {
       setPhoneNumValid(false);
     }
-    console.log(phoneNumInput.current.value);
   };
   const onChangeEmail = (e) => {
     setInputValue({
@@ -377,9 +372,6 @@ const SignUp = () => {
                   <></>
                 )}
                 <span className="place-label place-label-id">ID</span>
-                <span className="duplicate-check" onClick={onClickIdCheck}>
-                  중복검사
-                </span>
               </div>
               <div>
                 <input
