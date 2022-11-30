@@ -2,13 +2,16 @@ import axios from "axios";
 
 const API = {
   signin: async (loginId, password) => {
-    console.log("hihi login call!", loginId, password);
     const data = await axios.post("http://192.168.35.126:8080/login", {
       loginId: loginId,
       password: password,
     });
-
-    return data.data;
+    if (data.status === 200) {
+      console.log(data);
+      return data;
+    } else {
+      console.log("error", data.status);
+    }
   },
   signup: async (name, loginId, password, phoneNum, email) => {
     console.log("hihi signup call!", loginId, password, name, phoneNum, email);
@@ -19,7 +22,23 @@ const API = {
       phoneNum: phoneNum,
       email: email,
     });
-    return data.data;
+    console.log(data);
+    if (data.status === 200) {
+      return data;
+    } else {
+      console.log("error", data?.status);
+    }
+  },
+  idoverlap: async (loginId) => {
+    console.log("idcheck", loginId);
+    // const data = await axios.get("http://192.168.35.126:8080/overlap");
+
+    const data = await axios.get("http://192.168.35.126:8080/overlap", {
+      params: {
+        loginId: loginId,
+      },
+    });
+    return data;
   },
 };
 

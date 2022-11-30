@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { useSelector } from "react-redux";
 import API from "../API/Api";
+import axios from "axios";
 
 const SignUpStyle = styled.div`
   .sign-up-body {
@@ -181,27 +182,40 @@ const SignUp = () => {
 
   //function
   const handleSubmit = () => {
-    API.signup(
-      inputValue.name,
-      inputValue.loginId,
-      inputValue.password,
-      inputValue.phoneNum,
-      inputValue.email
-    ).then((data) => {
+    if (
+      nameValid &&
+      idValid &&
+      passwordValid &&
+      phoneNumValid &&
+      emailValid === true
+    ) {
+      API.signup(
+        inputValue.name,
+        inputValue.loginId,
+        inputValue.password,
+        inputValue.phoneNum,
+        inputValue.email
+      ).then((data) => {
+        if (data.status === 200) {
+          console.log("서버 통신 성공");
+          //1. 서버로 부터 중복체크 후 중복없으면 회원가입 성공
+          console.log("회원가입 성공");
+          //2. 중복 있으면 어느 부분이 중복이 되었는지 알림
+          console.log("회원가입 실패");
+        } else {
+          console.log("서버 통신 실패");
+        }
+      });
+    } else {
+      console.log("회원가입 인풋 에러");
+    }
+  };
+
+  const onClickIdCheck = () => {
+    API.idoverlap(inputValue.loginId).then((data) => {
       console.log(data);
     });
-    // if (
-    //   nameValid &&
-    //   idValid &&
-    //   passwordValid &&
-    //   phoneNumValid &&
-    //   emailValid === true
-    // ) {
-    //   console.log(inputValue);
-    // } else {
-    //   console.log("error");
-    // }
-    // 중복 검사
+    console.log("hi");
   };
 
   const onChangeName = (e) => {
@@ -345,6 +359,9 @@ const SignUp = () => {
                   <></>
                 )}
                 <span className="place-label place-label-id">ID</span>
+                <span className="duplicate-check" onClick={onClickIdCheck}>
+                  중복검사
+                </span>
               </div>
               <div>
                 <input
@@ -441,21 +458,7 @@ const SignUp = () => {
             </div>
             <div className="sign-up-form-other">
               <div className="sign-up">
-                <button
-                  onClick={() => {
-                    API.signup(
-                      inputValue.name,
-                      inputValue.loginId,
-                      inputValue.password,
-                      inputValue.phoneNum,
-                      inputValue.email
-                    ).then((data) => {
-                      console.log(data);
-                    });
-                  }}
-                >
-                  Sign Up
-                </button>
+                <button onClick={handleSubmit}>Sign Up</button>
               </div>
             </div>
           </div>

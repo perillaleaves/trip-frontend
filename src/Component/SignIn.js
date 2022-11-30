@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import API from "../API/Api.js";
-import axios from "axios";
 
 const SignInStyle = styled.div`
   .login-wrapper {
@@ -89,8 +88,21 @@ const SignIn = ({ onClickSignUp, onClickForgotPW }) => {
     });
     console.log(inputValue);
   }
-  // function onClickSignIn() {
-  // }
+  function onClickSignIn() {
+    API.signin(inputValue.loginId, inputValue.password).then((data) => {
+      //중복되는 부분을 서버에서 받아서 로그인 실패로 빼기
+      //success
+      if (data.status === 200) {
+        // 1. 아이디, 비밀번호 둘 다 맞으면 로그인 성공
+        // 2. 아이디, 비밀번호 둘 중 하나라도 틀리면 로그인 실패 (어느 부분이 틀렸는지 알림)
+        console.log("서버 통신 성공");
+      }
+      //fail
+      else {
+        console.log("서버 통신 실패");
+      }
+    });
+  }
 
   return (
     <>
@@ -125,18 +137,7 @@ const SignIn = ({ onClickSignUp, onClickForgotPW }) => {
               </div>
               <div className="login-form-other">
                 <div className="sign-in">
-                  <button
-                    onClick={() => {
-                      console.log(inputValue.loginId, inputValue.password);
-                      API.signin(inputValue.loginId, inputValue.password).then(
-                        (data) => {
-                          console.log(data);
-                        }
-                      );
-                    }}
-                  >
-                    Sign in
-                  </button>
+                  <button onClick={onClickSignIn}>Sign in</button>
                 </div>
                 <div className="login-form-help">
                   <span className="sign-up" onClick={onClickSignUp}>

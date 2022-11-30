@@ -2,8 +2,6 @@ import React from "react";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import App from "./App";
-import SignIn from "./Component/SignIn";
-import SignUp from "./Component/SignUp";
 import Sign from "./Component/Sign";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
