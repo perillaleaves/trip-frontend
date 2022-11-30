@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import "../App.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -181,12 +181,16 @@ const SignUp = () => {
   });
 
   //function
+  // useEffect(() => {
+  //   const timer = setTimeout(() => console.log('Initial timeout!'), 1000);
+  //   return () => clearTimeout(timer);
+  // }, []);
   const handleSubmit = () => {
     if (
-      nameValid &&
-      idValid &&
-      passwordValid &&
-      phoneNumValid &&
+      nameValid ||
+      idValid ||
+      passwordValid ||
+      phoneNumValid ||
       emailValid === true
     ) {
       API.signup(
@@ -230,18 +234,32 @@ const SignUp = () => {
       setNameValid(false);
     }
   };
+  //
+  const debounce = (callback, delay) => {
+    let timer;
+    return (...args) => {
+      clearTimeout(timer);
+      timer = setTimeout(() => callback(...args), delay);
+    };
+  };
+  const printValue = useCallback(
+    debounce(() => onClickIdCheck(), 3000),
+    []
+  );
+
   const onChangeId = (e) => {
+    printValue(e.target.value);
     setInputValue({
       ...inputValue,
       [e.target.name]: e.target.value,
     });
-    // id 8글자 이상
     if (idInput.current.value.length >= 8) {
       setIdValid(true);
     } else {
       setIdValid(false);
     }
   };
+
   const onChangePW = (e) => {
     setInputValue({
       ...inputValue,
