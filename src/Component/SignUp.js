@@ -1,11 +1,10 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import styled from "styled-components";
 import "../App.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { useSelector } from "react-redux";
 import API from "../API/Api";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const SignUpStyle = styled.div`
@@ -72,6 +71,7 @@ const SignUpStyle = styled.div`
     border-color: rgba(0, 0, 0, 0.243);
     outline: none;
   }
+
   .sign-up button {
     background-color: #1b2866;
     border-radius: 3px;
@@ -163,6 +163,10 @@ const SignUp = () => {
   const phoneNumInput = useRef();
   const emailInput = useRef();
   // 반복되는 선언 줄이기
+  const [existId, setExistId] = useState(false);
+  const [existPhoneNum, setExistPhoneNum] = useState(false);
+  const [existEmail, setExistEmail] = useState(false);
+
   const [nameTouched, setNameTouched] = useState(false);
   const [idTouched, setIdTouched] = useState(false);
   const [passwordTouched, setPasswordTouched] = useState(false);
@@ -199,25 +203,11 @@ const SignUp = () => {
         inputValue.email
       ).then((data) => {
         if (data.status === 200) {
-          if (data.data.user) {
+          console.log(data.data);
+          if (data.data?.success?.code === "signup") {
             // success
             alert("회원가입 성공 !");
-            navigate("sign");
-          } else {
-            // error message
-            alert(data.data.error.message);
-            // 휴대폰 번호 중복 케이스
-            if (data.error.code === "ExistsPhoneNumber") {
-              phoneNumInput.current.focus();
-            }
-            // email 중복
-            if (data.error.code === "ExistsEmail") {
-              emailInput.current.focus();
-            }
-            // id 중복
-            if (data.error.code === "ExistsId") {
-              idInput.current.focus();
-            }
+            navigate("./sign");
           }
         } else {
           console.log("서버 통신 실패");
@@ -244,11 +234,33 @@ const SignUp = () => {
   const onClickIdCheck = () => {
     API.idoverlap(idInput.current.value).then((data) => {
       if (data.data.validate.code === "available") {
-        console.log(data.data.validate.code);
         setIdValid(true);
+        setExistId(false);
       } else {
-        console.log(data.data.validate.code);
         setIdValid(false);
+        setExistId(true);
+      }
+    });
+  };
+  const onClickPhoneNumCheck = () => {
+    API.phoneNumoverlap(phoneNumInput.current.value).then((data) => {
+      if (data.data.validate.code === "available") {
+        setPhoneNumValid(true);
+        setExistPhoneNum(false);
+      } else {
+        setPhoneNumValid(false);
+        setExistPhoneNum(true);
+      }
+    });
+  };
+  const onClickEmailCheck = () => {
+    API.emailoverlap(emailInput.current.value).then((data) => {
+      if (data.data.validate.code === "available") {
+        setEmailValid(true);
+        setExistEmail(false);
+      } else {
+        setEmailValid(false);
+        setExistEmail(true);
       }
     });
   };
@@ -260,18 +272,28 @@ const SignUp = () => {
       timer = setTimeout(() => callback(...args), delay);
     };
   };
-  const printValue = useCallback(
+  const printIdValue = useCallback(
     debounce(() => onClickIdCheck(), 1000),
+    []
+  );
+  const printPhoneNumValue = useCallback(
+    debounce(() => onClickPhoneNumCheck(), 1000),
+    []
+  );
+  const printEmailValue = useCallback(
+    debounce(() => onClickEmailCheck(), 1000),
     []
   );
 
   const onChangeId = (e) => {
-    printValue(idInput.current.value);
     setInputValue({
       ...inputValue,
       [e.target.name]: idInput.current.value,
     });
-    if (idInput.current.value.length <= 8) {
+    if (idInput.current.value.length >= 8) {
+      // 8글자 넘고 중복검사중에 변화 안되게 바꿔야함
+      printIdValue(idInput.current.value);
+    } else {
       setIdValid(false);
     }
   };
@@ -301,7 +323,7 @@ const SignUp = () => {
     // PN
     if (regexPN.test(phoneNumInput.current.value)) {
       // 하이픈 없이 숫자만
-      setPhoneNumValid(true);
+      printPhoneNumValue(phoneNumInput.current.value);
     } else {
       setPhoneNumValid(false);
     }
@@ -315,7 +337,7 @@ const SignUp = () => {
       /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
     // email
     if (regexEmail.test(emailInput.current.value)) {
-      setEmailValid(true);
+      printEmailValue(emailInput.current.value);
     } else {
       setEmailValid(false);
     }
@@ -367,7 +389,11 @@ const SignUp = () => {
               </div>
               <div>
                 <input
-                  className="sign-up-input sign-up-input-id"
+                  className={
+                    existId
+                      ? "sign-up-input sign-up-input-id-existId"
+                      : "sign-up-input sign-up-input-id"
+                  }
                   name="loginId"
                   ref={idInput}
                   value={inputValue.loginId}
@@ -391,7 +417,16 @@ const SignUp = () => {
                 ) : (
                   <></>
                 )}
-                <span className="place-label place-label-id">ID</span>
+
+                <span
+                  className={
+                    existId
+                      ? "place-label place-label-id-existId"
+                      : "place-label place-label-id"
+                  }
+                >
+                  ID
+                </span>
               </div>
               <div>
                 <input
@@ -426,7 +461,11 @@ const SignUp = () => {
               </div>
               <div>
                 <input
-                  className="sign-up-input sign-up-input-phoneNum"
+                  className={
+                    existPhoneNum
+                      ? "sign-up-input sign-up-input-phoneNum-existphoneNum"
+                      : "sign-up-input sign-up-input-phoneNum"
+                  }
                   name="phoneNum"
                   ref={phoneNumInput}
                   value={inputValue.phoneNum}
@@ -452,13 +491,23 @@ const SignUp = () => {
                 ) : (
                   <></>
                 )}
-                <span className="place-label place-label-phoneNum">
+                <span
+                  className={
+                    existPhoneNum
+                      ? "place-label place-label-phoneNum-existphoneNum"
+                      : "place-label place-label-phoneNum"
+                  }
+                >
                   PHONENUMBER
                 </span>
               </div>
               <div>
                 <input
-                  className="sign-up-input sign-up-input-email"
+                  className={
+                    existEmail
+                      ? "sign-up-input sign-up-input-email-existEmail"
+                      : "sign-up-input sign-up-input-email"
+                  }
                   name="email"
                   type="email"
                   ref={emailInput}
@@ -483,7 +532,15 @@ const SignUp = () => {
                 ) : (
                   <></>
                 )}
-                <span className="place-label place-label-email">EMAIL</span>
+                <span
+                  className={
+                    existEmail
+                      ? "place-label place-label-email-existEmail"
+                      : "place-label place-label-email"
+                  }
+                >
+                  EMAIL
+                </span>
               </div>
             </div>
             <div className="sign-up-form-other">
