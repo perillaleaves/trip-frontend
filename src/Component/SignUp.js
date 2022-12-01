@@ -1,9 +1,11 @@
-import { useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import "../App.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { useSelector } from "react-redux";
+import API from "../API/Api";
+import axios from "axios";
 
 const SignUpStyle = styled.div`
   .sign-up-body {
@@ -21,6 +23,8 @@ const SignUpStyle = styled.div`
     height: 520px;
     border-radius: 10px;
     box-shadow: 2px 2px 15px rgba(217, 217, 217, 0.451);
+    transform: translateX(-100vw);
+    transition: 1s;
   }
   .sign-up-holder-container {
     display: flex;
@@ -84,6 +88,47 @@ const SignUpStyle = styled.div`
     font-weight: bold;
     color: #1b2866cd;
   }
+
+  // input animate
+
+  .place-label {
+    position: absolute;
+    font-size: 12px;
+    color: #8c8c8c;
+    transform: translate(-238px, 12.5px);
+    transition: font 0.1s ease, top 0.1s ease, transform 0.1s ease;
+    pointer-events: none;
+  }
+
+  .sign-up-input-name:focus ~ .place-label-name,
+  .sign-up-input-name:valid ~ .place-label-name {
+    transform: translate(-238px, 0px);
+    font-size: 9px;
+  }
+
+  .sign-up-input-id:focus ~ .place-label-id,
+  .sign-up-input-id:valid ~ .place-label-id {
+    transform: translate(-238px, 0px);
+    font-size: 9px;
+  }
+  .sign-up-input-pw:focus ~ .place-label-pw,
+  .sign-up-input-pw:valid ~ .place-label-pw {
+    transform: translate(-238px, 0px);
+    font-size: 9px;
+  }
+
+  .sign-up-input-phoneNum:focus ~ .place-label-phoneNum,
+  .sign-up-input-phoneNum:valid ~ .place-label-phoneNum {
+    transform: translate(-238px, 0px);
+    font-size: 9px;
+  }
+
+  .sign-up-input-email:focus ~ .place-label-email,
+  .sign-up-input-email:valid ~ .place-label-email {
+    transform: translate(-238px, 0px);
+    font-size: 9px;
+  }
+
   /* fontawesome */
   .faCheck {
     opacity: 0;
@@ -114,7 +159,14 @@ const SignUp = () => {
   const passwordInput = useRef();
   const phoneNumInput = useRef();
   const emailInput = useRef();
-  const [touched, setTouched] = useState(false);
+  // 반복되는 선언 줄이기
+  const [nameTouched, setNameTouched] = useState(false);
+  const [idTouched, setIdTouched] = useState(false);
+  const [passwordTouched, setPasswordTouched] = useState(false);
+  const [phoneNumTouched, setPhoneNumTouched] = useState(false);
+  const [emailTouched, setEmailTouched] = useState(false);
+
+  // 반복되는 선언 줄이기
   const [nameValid, setNameValid] = useState(false);
   const [idValid, setIdValid] = useState(false);
   const [passwordValid, setPasswordValid] = useState(false);
@@ -127,12 +179,43 @@ const SignUp = () => {
     phoneNum: "",
     email: "",
   });
-  console.log(pageIndex);
 
-  //function
   const handleSubmit = () => {
-    console.log(inputValue);
-    // 중복 검사
+    if (
+      nameValid &&
+      idValid &&
+      passwordValid &&
+      phoneNumValid &&
+      emailValid === true
+    ) {
+      API.signup(
+        inputValue.name,
+        inputValue.loginId,
+        inputValue.password,
+        inputValue.phoneNum,
+        inputValue.email
+      ).then((data) => {
+        if (data.status === 200) {
+          if (data.data.user) {
+            // success
+            console.log("회원가입 성공 !");
+          } else {
+            // error message
+            console.log(data.data.error.message);
+          }
+        } else {
+          console.log("서버 통신 실패");
+        }
+      });
+    } else {
+      console.log("회원가입 인풋 에러");
+    }
+  };
+
+  const onClickIdCheck = () => {
+    API.idoverlap(inputValue.loginId).then((data) => {
+      console.log(data.data.message);
+    });
   };
 
   const onChangeName = (e) => {
@@ -147,18 +230,32 @@ const SignUp = () => {
       setNameValid(false);
     }
   };
+  //
+  const debounce = (callback, delay) => {
+    let timer;
+    return (...args) => {
+      clearTimeout(timer);
+      timer = setTimeout(() => callback(...args), delay);
+    };
+  };
+  const printValue = useCallback(
+    debounce(() => onClickIdCheck(), 3000),
+    []
+  );
+
   const onChangeId = (e) => {
+    printValue(e.target.value);
     setInputValue({
       ...inputValue,
       [e.target.name]: e.target.value,
     });
-    // id 8글자 이상
     if (idInput.current.value.length >= 8) {
       setIdValid(true);
     } else {
       setIdValid(false);
     }
   };
+
   const onChangePW = (e) => {
     setInputValue({
       ...inputValue,
@@ -171,10 +268,8 @@ const SignUp = () => {
       regexPW.test(inputValue.password)
     ) {
       setPasswordValid(true);
-      console.log("8글자 이상 and 대문자 포함");
     } else {
       setPasswordValid(false);
-      console.log("8글자 아래 or 대문자 미포함");
     }
   };
   const onChangePN = (e) => {
@@ -187,12 +282,9 @@ const SignUp = () => {
     if (regexPN.test(phoneNumInput.current.value)) {
       // 하이픈 없이 숫자만
       setPhoneNumValid(true);
-      console.log("가능");
     } else {
       setPhoneNumValid(false);
-      console.log("불가능");
     }
-    console.log(phoneNumInput.current.value);
   };
   const onChangeEmail = (e) => {
     setInputValue({
@@ -225,17 +317,17 @@ const SignUp = () => {
           <div className="sign-up-form">
             <div className="sign-up-form-main">
               <div className="sign-up-form-title">Sign Up</div>
-              <div>
+              <div className="sign-up-form-name">
                 <input
-                  className="sign-up-input sign-up-input-pw"
-                  placeholder="NAME"
+                  className="sign-up-input sign-up-input-name"
                   name="name"
                   ref={nameInput}
                   value={inputValue.name}
                   onChange={onChangeName}
-                  onBlur={() => setTouched(true)}
+                  onBlur={() => setNameTouched(true)}
+                  required
                 />
-                {touched ? (
+                {nameTouched ? (
                   <>
                     <FontAwesomeIcon
                       icon={faCheck}
@@ -251,18 +343,19 @@ const SignUp = () => {
                 ) : (
                   <></>
                 )}
+                <span className="place-label place-label-name">NAME</span>
               </div>
               <div>
                 <input
                   className="sign-up-input sign-up-input-id"
-                  placeholder="ID"
                   name="loginId"
                   ref={idInput}
                   value={inputValue.loginId}
                   onChange={onChangeId}
-                  onBlur={() => setTouched(true)}
+                  onBlur={() => setIdTouched(true)}
+                  required
                 />
-                {touched ? (
+                {idTouched ? (
                   <>
                     <FontAwesomeIcon
                       icon={faCheck}
@@ -278,19 +371,20 @@ const SignUp = () => {
                 ) : (
                   <></>
                 )}
+                <span className="place-label place-label-id">ID</span>
               </div>
               <div>
                 <input
                   className="sign-up-input sign-up-input-pw"
-                  placeholder="PASSWORD"
                   type="password"
                   name="password"
                   ref={passwordInput}
                   value={inputValue.password}
                   onChange={onChangePW}
-                  onBlur={() => setTouched(true)}
+                  onBlur={() => setPasswordTouched(true)}
+                  required
                 />
-                {touched ? (
+                {passwordTouched ? (
                   <>
                     <FontAwesomeIcon
                       icon={faCheck}
@@ -308,18 +402,19 @@ const SignUp = () => {
                 ) : (
                   <></>
                 )}
+                <span className="place-label place-label-pw">PASSWORD</span>
               </div>
               <div>
                 <input
-                  className="sign-up-input sign-up-input-pw"
-                  placeholder="PHONENUMBER 숫자만"
+                  className="sign-up-input sign-up-input-phoneNum"
                   name="phoneNum"
                   ref={phoneNumInput}
                   value={inputValue.phoneNum}
                   onChange={onChangePN}
-                  onBlur={() => setTouched(true)}
+                  onBlur={() => setPhoneNumTouched(true)}
+                  required
                 />
-                {touched ? (
+                {phoneNumTouched ? (
                   <>
                     <FontAwesomeIcon
                       icon={faCheck}
@@ -337,19 +432,22 @@ const SignUp = () => {
                 ) : (
                   <></>
                 )}
+                <span className="place-label place-label-phoneNum">
+                  PHONENUMBER
+                </span>
               </div>
               <div>
                 <input
-                  className="sign-up-input sign-up-input-pw"
-                  placeholder="EMAIL"
+                  className="sign-up-input sign-up-input-email"
                   name="email"
                   type="email"
                   ref={emailInput}
                   value={inputValue.email}
                   onChange={onChangeEmail}
-                  onBlur={() => setTouched(true)}
+                  onBlur={() => setEmailTouched(true)}
+                  required
                 />
-                {touched ? (
+                {emailTouched ? (
                   <>
                     <FontAwesomeIcon
                       icon={faCheck}
@@ -365,11 +463,12 @@ const SignUp = () => {
                 ) : (
                   <></>
                 )}
+                <span className="place-label place-label-email">EMAIL</span>
               </div>
             </div>
             <div className="sign-up-form-other">
               <div className="sign-up">
-                <button onClick={() => handleSubmit()}>Sign Up</button>
+                <button onClick={handleSubmit}>Sign Up</button>
               </div>
             </div>
           </div>

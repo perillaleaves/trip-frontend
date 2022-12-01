@@ -1,7 +1,8 @@
 import { useState } from "react";
-import styled from "styled-components";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import styled from "styled-components";
+import API from "../API/Api.js";
 
 const SignInStyle = styled.div`
   .login-wrapper {
@@ -19,6 +20,8 @@ const SignInStyle = styled.div`
     height: 320px;
     border-radius: 10px;
     box-shadow: 2px 2px 30px rgba(217, 217, 217, 0.451);
+    transform: translateX(0vw);
+    transition: 1s;
   }
   .login-form {
     width: 235px;
@@ -51,6 +54,7 @@ const SignInStyle = styled.div`
     border: none;
     width: 238px;
     height: 35px;
+    cursor: pointer;
   }
   .login-form-help {
     display: flex;
@@ -60,19 +64,25 @@ const SignInStyle = styled.div`
     font-weight: bold;
     color: #1b2866cd;
   }
+
+  .sign-up,
+  .forgot-pw {
+    cursor: pointer;
+  }
 `;
 
-const SignIn = () => {
+const SignIn = ({ onClickSignUp, onClickForgotPW }) => {
   //global state
-  const dispatch = useDispatch();
   const pageIndex = useSelector((state) => state.pageIndex);
 
   //local state
-  const navigate = useNavigate();
   const [inputValue, setInputValue] = useState({
     loginId: "",
     password: "",
   });
+  const navigate = useNavigate();
+
+  //function
   function onChange(e) {
     setInputValue({
       ...inputValue,
@@ -80,10 +90,27 @@ const SignIn = () => {
     });
     console.log(inputValue);
   }
-
-  function onClickSignUp() {
-    dispatch({ type: "SIGNUP" });
+  function onClickSignIn() {
+    API.signin(inputValue.loginId, inputValue.password).then((data) => {
+      //중복되는 부분을 서버에서 받아서 로그인 실패로 빼기
+      //success
+      if (data.status === 200) {
+        // 1. 아이디, 비밀번호 둘 다 맞으면 로그인 성공
+        if (data.data.result === "login") {
+          navigate("./login");
+        } else {
+          alert("로그인 실패");
+        }
+        // 2. 아이디, 비밀번호 둘 중 하나라도 틀리면 로그인 실패 (어느 부분이 틀렸는지 알림)
+        console.log("서버 통신 성공");
+      }
+      //fail
+      else {
+        console.log("서버 통신 실패");
+      }
+    });
   }
+
   return (
     <>
       <SignInStyle>
@@ -117,13 +144,15 @@ const SignIn = () => {
               </div>
               <div className="login-form-other">
                 <div className="sign-in">
-                  <button>Sign in</button>
+                  <button onClick={onClickSignIn}>Sign in</button>
                 </div>
                 <div className="login-form-help">
                   <span className="sign-up" onClick={onClickSignUp}>
                     SIGN UP
                   </span>
-                  <span className="forgot-pw">FORGOT PASSWORD ?</span>
+                  <span className="forgot-pw" onClick={onClickForgotPW}>
+                    FORGOT PASSWORD ?
+                  </span>
                 </div>
               </div>
             </div>
