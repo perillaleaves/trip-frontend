@@ -30,13 +30,13 @@ const API = {
     }
   },
   idoverlap: async (loginId) => {
-    console.log("idcheck", loginId);
     // ID 중복검사 API CALL
     const data = await axios.get("http://192.168.35.126:8080/overlap", {
       params: {
         loginId: loginId,
       },
     });
+    console.log("idcheck", loginId);
     return data;
   },
 };

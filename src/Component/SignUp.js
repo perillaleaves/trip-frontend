@@ -6,6 +6,7 @@ import { faCheck, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { useSelector } from "react-redux";
 import API from "../API/Api";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const SignUpStyle = styled.div`
   .sign-up-body {
@@ -153,6 +154,8 @@ const SignUp = () => {
   //global state
   const pageIndex = useSelector((state) => state.pageIndex);
   //local state
+  const navigate = useNavigate();
+
   //FIX
   const nameInput = useRef();
   const idInput = useRef();
@@ -198,24 +201,31 @@ const SignUp = () => {
         if (data.status === 200) {
           if (data.data.user) {
             // success
-            console.log("회원가입 성공 !");
+            alert("회원가입 성공 !");
+            navigate("sign");
           } else {
             // error message
-            console.log(data.data.error.message);
+            alert(data.data.error.message);
+            // 휴대폰 번호 중복 케이스
+            if (data.error.code === "ExistsPhoneNumber") {
+              phoneNumInput.current.focus();
+            }
+            // email 중복
+            if (data.error.code === "ExistsEmail") {
+              emailInput.current.focus();
+            }
+            // id 중복
+            if (data.error.code === "ExistsId") {
+              idInput.current.focus();
+            }
           }
         } else {
           console.log("서버 통신 실패");
         }
       });
     } else {
-      console.log("회원가입 인풋 에러");
+      alert("회원가입 인풋 에러");
     }
-  };
-
-  const onClickIdCheck = () => {
-    API.idoverlap(inputValue.loginId).then((data) => {
-      console.log(data.data.message);
-    });
   };
 
   const onChangeName = (e) => {
@@ -230,6 +240,18 @@ const SignUp = () => {
       setNameValid(false);
     }
   };
+
+  const onClickIdCheck = () => {
+    API.idoverlap(idInput.current.value).then((data) => {
+      if (data.data.validate.code === "available") {
+        console.log(data.data.validate.code);
+        setIdValid(true);
+      } else {
+        console.log(data.data.validate.code);
+        setIdValid(false);
+      }
+    });
+  };
   //
   const debounce = (callback, delay) => {
     let timer;
@@ -239,19 +261,17 @@ const SignUp = () => {
     };
   };
   const printValue = useCallback(
-    debounce(() => onClickIdCheck(), 3000),
+    debounce(() => onClickIdCheck(), 1000),
     []
   );
 
   const onChangeId = (e) => {
-    printValue(e.target.value);
+    printValue(idInput.current.value);
     setInputValue({
       ...inputValue,
-      [e.target.name]: e.target.value,
+      [e.target.name]: idInput.current.value,
     });
-    if (idInput.current.value.length >= 8) {
-      setIdValid(true);
-    } else {
+    if (idInput.current.value.length <= 8) {
       setIdValid(false);
     }
   };
