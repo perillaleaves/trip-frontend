@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import API from "../API/Api.js";
 
@@ -79,6 +80,7 @@ const SignIn = ({ onClickSignUp, onClickForgotPW }) => {
     loginId: "",
     password: "",
   });
+  const navigate = useNavigate();
 
   //function
   function onChange(e) {
@@ -94,6 +96,11 @@ const SignIn = ({ onClickSignUp, onClickForgotPW }) => {
       //success
       if (data.status === 200) {
         // 1. 아이디, 비밀번호 둘 다 맞으면 로그인 성공
+        if (data.data.result === "login") {
+          navigate("./login");
+        } else {
+          alert("로그인 실패");
+        }
         // 2. 아이디, 비밀번호 둘 중 하나라도 틀리면 로그인 실패 (어느 부분이 틀렸는지 알림)
         console.log("서버 통신 성공");
       }
