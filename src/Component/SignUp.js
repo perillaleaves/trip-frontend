@@ -130,6 +130,64 @@ const SignUpStyle = styled.div`
     font-size: 9px;
   }
 
+  .duplicate-check {
+    position: absolute;
+    color: #fff;
+    transform: translate(0px, 5px);
+    cursor: pointer;
+    font-size: 11px;
+    padding: 4px;
+    border: 1px solid #000;
+    border-radius: 5px;
+    background-color: #6b728e;
+  }
+  .place-label-id-existId {
+    color: red !important;
+  }
+  .place-label-phoneNum-existId {
+    color: red !important;
+  }
+  .place-label-email-existEmail {
+    color: red !important;
+  }
+  .sign-up-input-id-existId:focus ~ .place-label-id-existId,
+  .sign-up-input-id-existId:valid ~ .place-label-id-existId {
+    transform: translate(-238px, 0px);
+    font-size: 9px;
+    color: red;
+  }
+  .sign-up-input-phoneNum-existphoneNum:focus
+    ~ .place-label-phoneNum-existphoneNum,
+  .sign-up-input-phoneNum-existphoneNum:valid
+    ~ .place-label-phoneNum-existphoneNum {
+    transform: translate(-238px, 0px);
+    font-size: 9px;
+    color: red;
+  }
+  .sign-up-input-email-existEmail:focus ~ .place-label-email-existEmail,
+  .sign-up-input-email-existEmail:valid ~ .place-label-email-existEmail {
+    transform: translate(-238px, 0px);
+    font-size: 9px;
+    color: red;
+  }
+  .sign-up-input-id-existId {
+    border-bottom: 1px solid red !important;
+  }
+  .sign-up-input-id-existId:valid {
+    border-bottom: 1px solid red !important;
+  }
+  .sign-up-input-phoneNum-existphoneNum {
+    border-bottom: 1px solid red !important;
+  }
+  .sign-up-input-phoneNum-existphoneNum:valid {
+    border-bottom: 1px solid red !important;
+  }
+  .sign-up-input-email-existEmail {
+    border-bottom: 1px solid red !important;
+  }
+  .sign-up-input-email-existEmail:valid {
+    border-bottom: 1px solid red !important;
+  }
   /* fontawesome */
   .faCheck {
     opacity: 0;
