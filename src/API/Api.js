@@ -1,11 +1,16 @@
 import axios from "axios";
 
+const API_base = "http://192.168.35.126:8080";
 const API = {
   signin: async (loginId, password) => {
-    const data = await axios.post("http://192.168.35.126:8080/login", {
-      loginId: loginId,
-      password: password,
-    });
+    const data = await axios.post(
+      `${API_base}/login`,
+      {
+        loginId: loginId,
+        password: password,
+      }
+      // { withCredentials: true }
+    );
     if (data.status === 200) {
       console.log(data);
       return data;
@@ -15,7 +20,7 @@ const API = {
   },
   signup: async (name, loginId, password, phoneNum, email) => {
     console.log("hihi signup call!", loginId, password, name, phoneNum, email);
-    const data = await axios.post("http://192.168.35.126:8080/signup", {
+    const data = await axios.post(`${API_base}/signup`, {
       name: name,
       loginId: loginId,
       password: password,
@@ -31,7 +36,7 @@ const API = {
   },
   idoverlap: async (loginId) => {
     // ID 중복검사 API CALL
-    const data = await axios.get("http://192.168.35.126:8080/overlap/loginId", {
+    const data = await axios.get(`${API_base}/overlap/loginId`, {
       params: {
         loginId: loginId,
       },
@@ -41,20 +46,17 @@ const API = {
   },
   phoneNumoverlap: async (phoneNum) => {
     // ID 중복검사 API CALL
-    const data = await axios.get(
-      "http://192.168.35.126:8080/overlap/phoneNum",
-      {
-        params: {
-          phoneNum: phoneNum,
-        },
-      }
-    );
+    const data = await axios.get(`${API_base}/overlap/phoneNum`, {
+      params: {
+        phoneNum: phoneNum,
+      },
+    });
     console.log("PNcheck", phoneNum);
     return data;
   },
   emailoverlap: async (email) => {
     // ID 중복검사 API CALL
-    const data = await axios.get("http://192.168.35.126:8080/overlap/email", {
+    const data = await axios.get(`${API_base}/overlap/email`, {
       params: {
         email: email,
       },

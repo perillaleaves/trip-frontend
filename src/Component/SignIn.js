@@ -98,13 +98,13 @@ const SignIn = ({ onClickSignUp, onClickForgotPW }) => {
           navigate("./login");
         } else {
           // 로그인 실패시 아이디 or 비밀번호 어떤게 틀렸는지 focus
-          if (data.data.fail.code === "EmptyLoginId") {
+          if (data.data.error.code === "EmptyLoginId") {
             idInput.current.focus();
-            alert(data.data.fail.message);
+            alert(data.data.error.message);
           }
-          if (data.data.fail.code === "InconsistencyPassword") {
+          if (data.data.error.code === "InconsistencyPassword") {
             passwordInput.current.focus();
-            alert(data.data.fail.message);
+            alert(data.data.error.message);
           }
         }
         setInputValue({ loginId: "", password: "" });
