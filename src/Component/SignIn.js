@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -76,6 +76,8 @@ const SignIn = ({ onClickSignUp, onClickForgotPW }) => {
   const pageIndex = useSelector((state) => state.pageIndex);
 
   //local state
+  const idInput = useRef();
+  const passwordInput = useRef();
   const [inputValue, setInputValue] = useState({
     loginId: "",
     password: "",
@@ -96,7 +98,14 @@ const SignIn = ({ onClickSignUp, onClickForgotPW }) => {
           navigate("./login");
         } else {
           // 로그인 실패시 아이디 or 비밀번호 어떤게 틀렸는지 focus
-          alert("로그인 실패");
+          if (data.data.fail.code === "EmptyLoginId") {
+            idInput.current.focus();
+            alert(data.data.fail.message);
+          }
+          if (data.data.fail.code === "InconsistencyPassword") {
+            passwordInput.current.focus();
+            alert(data.data.fail.message);
+          }
         }
         setInputValue({ loginId: "", password: "" });
         console.log("서버 통신 성공");
@@ -123,6 +132,7 @@ const SignIn = ({ onClickSignUp, onClickForgotPW }) => {
                     placeholder="ID"
                     name="loginId"
                     value={inputValue.loginId}
+                    ref={idInput}
                     onChange={onChange}
                   />
                 </div>
@@ -132,6 +142,8 @@ const SignIn = ({ onClickSignUp, onClickForgotPW }) => {
                     placeholder="PASSWORD"
                     value={inputValue.password}
                     name="password"
+                    ref={passwordInput}
+                    type="password"
                     onChange={onChange}
                   />
                 </div>
