@@ -5,7 +5,7 @@ function App() {
   const navigate = useNavigate();
 
   function onClick() {
-    navigate("/signin");
+    navigate("/sign");
   }
 
   return (

@@ -88,24 +88,19 @@ const SignIn = ({ onClickSignUp, onClickForgotPW }) => {
       ...inputValue,
       [e.target.name]: e.target.value,
     });
-    console.log(inputValue);
   }
   function onClickSignIn() {
     API.signin(inputValue.loginId, inputValue.password).then((data) => {
-      //중복되는 부분을 서버에서 받아서 로그인 실패로 빼기
-      //success
       if (data.status === 200) {
-        // 1. 아이디, 비밀번호 둘 다 맞으면 로그인 성공
         if (data.data.result === "login") {
           navigate("./login");
         } else {
+          // 로그인 실패시 아이디 or 비밀번호 어떤게 틀렸는지 focus
           alert("로그인 실패");
         }
-        // 2. 아이디, 비밀번호 둘 중 하나라도 틀리면 로그인 실패 (어느 부분이 틀렸는지 알림)
+        setInputValue({ loginId: "", password: "" });
         console.log("서버 통신 성공");
-      }
-      //fail
-      else {
+      } else {
         console.log("서버 통신 실패");
       }
     });
