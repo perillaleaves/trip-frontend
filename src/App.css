@@ -13,3 +13,16 @@ html {
   margin: 0;
   overflow: hidden;
 }
+
+.exist-input {
+  border-bottom: 1px solid red !important;
+}
+.exist-input:valid {
+  border-bottom: 1px solid red !important;
+}
+.exist-input:focus ~ .exist-placeholder,
+.exist-input:valid ~ .exist-placeholder {
+  transform: translate(-238px, 0px);
+  font-size: 9px;
+  color: red;
+}

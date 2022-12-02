@@ -141,53 +141,20 @@ const SignUpStyle = styled.div`
     border-radius: 5px;
     background-color: #6b728e;
   }
-  .place-label-id-existId {
-    color: red !important;
+
+  .exist-input {
+    border-bottom: 1px solid red !important;
   }
-  .place-label-phoneNum-existId {
-    color: red !important;
+  .exist-input:valid {
+    border-bottom: 1px solid red !important;
   }
-  .place-label-email-existEmail {
-    color: red !important;
-  }
-  .sign-up-input-id-existId:focus ~ .place-label-id-existId,
-  .sign-up-input-id-existId:valid ~ .place-label-id-existId {
+  .exist-input:focus ~ .exist-placeholder,
+  .exist-input:valid ~ .exist-placeholder {
     transform: translate(-238px, 0px);
     font-size: 9px;
     color: red;
   }
-  .sign-up-input-phoneNum-existphoneNum:focus
-    ~ .place-label-phoneNum-existphoneNum,
-  .sign-up-input-phoneNum-existphoneNum:valid
-    ~ .place-label-phoneNum-existphoneNum {
-    transform: translate(-238px, 0px);
-    font-size: 9px;
-    color: red;
-  }
-  .sign-up-input-email-existEmail:focus ~ .place-label-email-existEmail,
-  .sign-up-input-email-existEmail:valid ~ .place-label-email-existEmail {
-    transform: translate(-238px, 0px);
-    font-size: 9px;
-    color: red;
-  }
-  .sign-up-input-id-existId {
-    border-bottom: 1px solid red !important;
-  }
-  .sign-up-input-id-existId:valid {
-    border-bottom: 1px solid red !important;
-  }
-  .sign-up-input-phoneNum-existphoneNum {
-    border-bottom: 1px solid red !important;
-  }
-  .sign-up-input-phoneNum-existphoneNum:valid {
-    border-bottom: 1px solid red !important;
-  }
-  .sign-up-input-email-existEmail {
-    border-bottom: 1px solid red !important;
-  }
-  .sign-up-input-email-existEmail:valid {
-    border-bottom: 1px solid red !important;
-  }
+
   /* fontawesome */
   .faCheck {
     opacity: 0;
@@ -330,15 +297,15 @@ const SignUp = () => {
       timer = setTimeout(() => callback(...args), delay);
     };
   };
-  const printIdValue = useCallback(
+  const debouncedIdValue = useCallback(
     debounce(() => onClickIdCheck(), 1000),
     []
   );
-  const printPhoneNumValue = useCallback(
+  const debouncedPhoneNumValue = useCallback(
     debounce(() => onClickPhoneNumCheck(), 1000),
     []
   );
-  const printEmailValue = useCallback(
+  const debouncedEmailValue = useCallback(
     debounce(() => onClickEmailCheck(), 1000),
     []
   );
@@ -350,7 +317,7 @@ const SignUp = () => {
     });
     if (idInput.current.value.length >= 8) {
       // 8글자 넘고 중복검사중에 변화 안되게 바꿔야함
-      printIdValue(idInput.current.value);
+      debouncedIdValue(idInput.current.value);
     } else {
       setIdValid(false);
     }
@@ -381,7 +348,7 @@ const SignUp = () => {
     // PN
     if (regexPN.test(phoneNumInput.current.value)) {
       // 하이픈 없이 숫자만
-      printPhoneNumValue(phoneNumInput.current.value);
+      debouncedPhoneNumValue(phoneNumInput.current.value);
     } else {
       setPhoneNumValid(false);
     }
@@ -395,7 +362,7 @@ const SignUp = () => {
       /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
     // email
     if (regexEmail.test(emailInput.current.value)) {
-      printEmailValue(emailInput.current.value);
+      debouncedEmailValue(emailInput.current.value);
     } else {
       setEmailValid(false);
     }
@@ -449,7 +416,7 @@ const SignUp = () => {
                 <input
                   className={
                     existId
-                      ? "sign-up-input sign-up-input-id-existId"
+                      ? "sign-up-input sign-up-input-id exist-input"
                       : "sign-up-input sign-up-input-id"
                   }
                   name="loginId"
@@ -479,7 +446,7 @@ const SignUp = () => {
                 <span
                   className={
                     existId
-                      ? "place-label place-label-id-existId"
+                      ? "place-label place-label-id exist-placeholder"
                       : "place-label place-label-id"
                   }
                 >
@@ -521,7 +488,7 @@ const SignUp = () => {
                 <input
                   className={
                     existPhoneNum
-                      ? "sign-up-input sign-up-input-phoneNum-existphoneNum"
+                      ? "sign-up-input sign-up-input-phoneNum exist-input"
                       : "sign-up-input sign-up-input-phoneNum"
                   }
                   name="phoneNum"
@@ -552,7 +519,7 @@ const SignUp = () => {
                 <span
                   className={
                     existPhoneNum
-                      ? "place-label place-label-phoneNum-existphoneNum"
+                      ? "place-label place-label-phoneNum exist-placeholder"
                       : "place-label place-label-phoneNum"
                   }
                 >
@@ -563,7 +530,7 @@ const SignUp = () => {
                 <input
                   className={
                     existEmail
-                      ? "sign-up-input sign-up-input-email-existEmail"
+                      ? "sign-up-input sign-up-input-email exist-input"
                       : "sign-up-input sign-up-input-email"
                   }
                   name="email"
@@ -593,7 +560,7 @@ const SignUp = () => {
                 <span
                   className={
                     existEmail
-                      ? "place-label place-label-email-existEmail"
+                      ? "place-label place-label-email exist-placeholder"
                       : "place-label place-label-email"
                   }
                 >
