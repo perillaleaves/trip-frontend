@@ -14,15 +14,28 @@ html {
   overflow: hidden;
 }
 
-.exist-input {
-  border-bottom: 1px solid red !important;
+.board-wrapper {
+  overflow: hidden;
+  background-color: #fff;
+  position: absolute;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: left;
+  width: 700px;
+  height: 520px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 15px rgba(217, 217, 217, 0.451);
 }
-.exist-input:valid {
-  border-bottom: 1px solid red !important;
+.board {
+  margin: 5%;
 }
-.exist-input:focus ~ .exist-placeholder,
-.exist-input:valid ~ .exist-placeholder {
-  transform: translate(-238px, 0px);
-  font-size: 9px;
-  color: red;
+.board-title-input {
+  width: 500px;
+}
+.board-content-input {
+  width: 500px;
+  height: 400px;
 }

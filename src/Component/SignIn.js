@@ -94,10 +94,10 @@ const SignIn = ({ onClickSignUp, onClickForgotPW }) => {
   function onClickSignIn() {
     API.signin(inputValue.loginId, inputValue.password).then((data) => {
       if (data.status === 200) {
-        if (data.data.result === "login") {
-          navigate("./login");
+        if (data.data.code === "login") {
+          // 로그인 성공시 로그인 정보 갖고있기
+          navigate("/login");
         } else {
-          // 로그인 실패시 아이디 or 비밀번호 어떤게 틀렸는지 focus
           if (data.data.error.code === "EmptyLoginId") {
             idInput.current.focus();
             alert(data.data.error.message);

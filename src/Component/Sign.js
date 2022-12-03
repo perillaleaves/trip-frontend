@@ -65,7 +65,7 @@ const Sign = () => {
   return (
     <SignStyle>
       <div className="sign">
-        <SignUp />
+        <SignUp onClickSignIn={onClickSignIn} />
         <SignIn
           onClickSignUp={onClickSignUp}
           onClickForgotPW={onClickForgotPW}

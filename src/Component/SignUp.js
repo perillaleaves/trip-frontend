@@ -175,11 +175,11 @@ const SignUpStyle = styled.div`
     opacity: 1;
   }
 `;
-const SignUp = () => {
+const SignUp = ({ onClickSignIn }) => {
   //global state
   const pageIndex = useSelector((state) => state.pageIndex);
+
   //local state
-  const navigate = useNavigate();
 
   //FIX
   const nameInput = useRef();
@@ -211,6 +211,11 @@ const SignUp = () => {
     phoneNum: "",
     email: "",
   });
+  const test = () => {
+    console.log("hi");
+    let asd = () => onClickSignIn;
+    asd();
+  };
 
   const handleSubmit = () => {
     if (
@@ -232,7 +237,6 @@ const SignUp = () => {
           if (data.data?.success?.code === "signup") {
             // success
             alert("회원가입 성공 !");
-            navigate("./sign");
           }
         } else {
           console.log("서버 통신 실패");
@@ -570,7 +574,7 @@ const SignUp = () => {
             </div>
             <div className="sign-up-form-other">
               <div className="sign-up">
-                <button onClick={handleSubmit}>Sign Up</button>
+                <button onClick={test}>Sign Up</button>
               </div>
             </div>
           </div>
