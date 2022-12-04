@@ -14,7 +14,7 @@ html {
   overflow: hidden;
 }
 
-.board-wrapper {
+.post-editor-wrapper {
   overflow: hidden;
   background-color: #fff;
   position: absolute;
@@ -29,13 +29,13 @@ html {
   border-radius: 10px;
   box-shadow: 2px 2px 15px rgba(217, 217, 217, 0.451);
 }
-.board {
+.post-editor {
   margin: 5%;
 }
-.board-title-input {
+.post-editor-title-input {
   width: 500px;
 }
-.board-content-input {
+.post-editor-content-input {
   width: 500px;
   height: 400px;
 }

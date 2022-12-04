@@ -6,7 +6,8 @@ import Sign from "./Component/Sign";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 import Account from "./Component/Account";
-import Board from "./Component/Board";
+import PostEditor from "./Component/PostEditor";
+import PostList from "./Component/PostList";
 
 function reducer(currentState, action) {
   if (currentState === undefined) {
@@ -34,7 +35,8 @@ const Routing = () => {
         <Route exact path="/*" element={<App />} />
         <Route exact path="/sign" element={<Sign />} />
         <Route exact path="/account" element={<Account />} />
-        <Route exact path="/board" element={<Board />} />
+        <Route exact path="/posteditor" element={<PostEditor />} />
+        <Route exact path="/postlist" element={<PostList />} />
       </Routes>
     </Provider>
   );
