@@ -8,8 +8,8 @@ const API = {
       {
         loginId: loginId,
         password: password,
-      }
-      // { withCredentials: true }
+      },
+      { withCredentials: true }
     );
     if (data.status === 200) {
       console.log(data);

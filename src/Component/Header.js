@@ -11,14 +11,9 @@ const Header = () => {
           <span>헤더4</span>
           <span>헤더5</span>
         </div>
-        <div className="header-search">
-          <div>
-            <input />
-            <button>검색</button>
-          </div>
-        </div>
+
         <div className="myaccount">
-          <div>내정보</div>
+          <button>내정보</button>
         </div>
       </div>
     </>
