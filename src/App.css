@@ -13,7 +13,9 @@ html {
   margin: 0;
   overflow: hidden;
 }
-
+#root {
+  height: 100%;
+}
 .post-editor-wrapper {
   overflow: hidden;
   background-color: #fff;

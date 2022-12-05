@@ -1,0 +1,10 @@
+.postlist-wrapper {
+  width: 100%;
+}
+
+.postlist {
+  display: flex;
+}
+.postlist span {
+  width: 100px;
+}

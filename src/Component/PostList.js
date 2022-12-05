@@ -1,15 +1,25 @@
+import Post from "./Post";
+import "./PostList.css";
 const PostList = ({ dummyList }) => {
   return (
     <>
-      <div>
-        {dummyList.map((it) => (
-          <div>
-            <div>id : {it.id}</div>
-            <div>author : {it.author}</div>
-            <div>content : {it.content}</div>
-            <div>time : {it.created_date}</div>
-          </div>
-        ))}
+      <div className="postlist-wrapper">
+        <div className="postlist">
+          <span>id</span>
+          <span>title</span>
+          <span>author</span>
+          <span>time</span>
+        </div>
+        <div>
+          {dummyList.map((post) => (
+            <Post
+              post={post}
+              key={post.id}
+              // onClick={<PostDetail post={post} />}
+              onClick={() => alert("hi")}
+            />
+          ))}
+        </div>
       </div>
     </>
   );
