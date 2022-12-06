@@ -8,26 +8,9 @@ import { Provider } from "react-redux";
 import Account from "./Component/Account";
 import PostEditor from "./Component/PostEditor";
 import PostList from "./Component/PostList";
+import { signReducer, postReducer } from "./module/reducer";
 
-function reducer(currentState, action) {
-  if (currentState === undefined) {
-    return {
-      pageIndex: 0,
-    };
-  }
-  const newState = { ...currentState };
-  if (action.type === "SIGNUP") {
-    newState.pageIndex = -1;
-  }
-  if (action.type === "SIGNIN") {
-    newState.pageIndex = 0;
-  }
-  if (action.type === "FORGOTPW") {
-    newState.pageIndex = +1;
-  }
-  return newState;
-}
-const store = createStore(reducer);
+const store = createStore(signReducer);
 const Routing = () => {
   return (
     <Provider store={store}>

@@ -1,14 +1,13 @@
 import "./Post.css";
-import PostDetail from "./PostDetail";
 
-const Post = ({ post }) => {
+const Post = ({ id, title, author, created_date }) => {
   return (
     <>
-      <div className="post" onClick={<PostDetail post={post} />}>
-        <div>{post.id}</div>
-        <div>{post.title}</div>
-        <div>{post.author}</div>
-        <div>{post.created_date}</div>
+      <div className="post">
+        <div>{id}</div>
+        <div>{title}</div>
+        <div>{author}</div>
+        <div>{created_date}</div>
       </div>
     </>
   );

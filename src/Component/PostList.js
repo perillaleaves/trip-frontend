@@ -12,12 +12,7 @@ const PostList = ({ dummyList }) => {
         </div>
         <div>
           {dummyList.map((post) => (
-            <Post
-              post={post}
-              key={post.id}
-              // onClick={<PostDetail post={post} />}
-              onClick={() => alert("hi")}
-            />
+            <Post key={post.id} {...post} />
           ))}
         </div>
       </div>
