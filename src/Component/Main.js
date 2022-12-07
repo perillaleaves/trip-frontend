@@ -26,7 +26,7 @@ const Main = () => {
       postAuthor: selectRowData.postAuthor,
     });
     console.log(inputData);
-    navigate("/1");
+    navigate(`/${postId}`);
     // inputData 에 selectRowData 의 값을 반영
     // if (JSON.stringify(selectRowData) !== "{}") {
     //   setInputData({

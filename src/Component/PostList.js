@@ -7,6 +7,8 @@ const PostList = ({ onRowClick }) => {
 
   return (
     <div className="post-wrapper">
+      <button>새 글 쓰기</button>
+
       <table border={1}>
         <tbody>
           <tr>
