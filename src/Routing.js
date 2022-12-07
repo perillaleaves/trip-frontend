@@ -8,9 +8,9 @@ import { Provider } from "react-redux";
 import Account from "./Component/Account";
 import PostEditor from "./Component/PostEditor";
 import PostList from "./Component/PostList";
-import { signReducer, postReducer } from "./module/reducer";
+import rootReducer from "./module/rootReducer";
 
-const store = createStore(signReducer);
+const store = createStore(rootReducer);
 const Routing = () => {
   return (
     <Provider store={store}>

@@ -17,32 +17,8 @@ export function signReducer(currentState, action) {
   return newState;
 }
 
-// Action Type
-const MODE_REMOVE = "REMOVE";
-const MODE_SAVE = "SAVE";
-const MODE_SELECT_ROW = "SELECT_ROW";
-
-// Action Create Function
-export const postSave = (saveData) => ({
-  type: MODE_SAVE,
-  saveData: {
-    postId: saveData.postId,
-    postTitle: saveData.postTitle,
-    postContent: saveData.postContent,
-  },
-});
-export const postRemove = (postId) => ({
-  type: MODE_REMOVE,
-  postId: postId,
-});
-export const postSelectRow = (postId) => ({
-  type: MODE_SELECT_ROW,
-  postId: postId,
-});
-
-// initState
 const initialState = {
-  dummyList: [
+  posts: [
     {
       id: 1,
       author: "이지윤",
@@ -74,17 +50,44 @@ const initialState = {
   ],
   lastId: 4,
 };
+// Action Type
+const MODE_REMOVE = "REMOVE";
+const MODE_SAVE = "SAVE";
+const MODE_SELECT_ROW = "SELECT_ROW";
+
+// Action Create Function
+export const postSave = (saveData) => ({
+  type: MODE_SAVE,
+  saveData: {
+    postId: saveData.postId,
+    postTitle: saveData.postTitle,
+    postContent: saveData.postContent,
+  },
+});
+export const postRemove = (postId) => ({
+  type: MODE_REMOVE,
+  postId: postId,
+});
+export const postSelectRow = (postId) => ({
+  type: MODE_SELECT_ROW,
+  postId: postId,
+});
+
+// initState
 
 // Reducer
 export function postReducer(state = initialState, action) {
+  if (initialState === undefined) {
+    return console.log("undifined");
+  }
   switch (
     action.type // 클릭한 postId 를 가지지 않은 data 만 return
   ) {
-    // case MODE_REMOVE:
-    //   return {
-    //     ...state,
-    //     posts: state.posts.filter((row) => row.postId !== action.postId),
-    //   };
+    case MODE_REMOVE:
+      return {
+        ...state,
+        posts: state.posts.filter((row) => row.postId !== action.postId),
+      };
     case MODE_SAVE:
       if (action.saveData.postId === "") {
         // postId 가 없다면 신규 데이터 저장

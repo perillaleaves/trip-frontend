@@ -1,6 +1,6 @@
-import Post from "./Post";
 import "./PostList.css";
-const PostList = ({ dummyList }) => {
+
+const PostList = () => {
   return (
     <>
       <div className="postlist-wrapper">
@@ -10,11 +10,7 @@ const PostList = ({ dummyList }) => {
           <span>author</span>
           <span>time</span>
         </div>
-        <div>
-          {dummyList.map((post) => (
-            <Post key={post.id} {...post} />
-          ))}
-        </div>
+        <div></div>
       </div>
     </>
   );
