@@ -20,35 +20,36 @@ export function signReducer(currentState, action) {
 const initialState = {
   posts: [
     {
-      id: 1,
-      author: "이지윤",
-      title: "제목1",
-      content: "hello 1",
-      created_date: new Date().getTime(),
+      postId: 1,
+      postAuthor: "이지윤",
+      postTitle: "제목1",
+      postContent: "hello 1",
+      postCreated_date: new Date().getTime(),
     },
     {
-      id: 2,
-      author: "이지윤",
-      title: "제목2",
-      content: "hello 2",
-      created_date: new Date().getTime(),
+      postId: 2,
+      postAuthor: "이지윤",
+      postTitle: "제목2",
+      postContent: "hello 2",
+      postCreated_date: new Date().getTime(),
     },
     {
-      id: 3,
-      author: "이지윤",
-      title: "제목3",
-      content: "hello 3",
-      created_date: new Date().getTime(),
+      postId: 3,
+      postAuthor: "이지윤",
+      postTitle: "제목3",
+      postContent: "hello 3",
+      postCreated_date: new Date().getTime(),
     },
     {
-      id: 4,
-      author: "이지윤",
-      title: "제목4",
-      content: "hello 4",
-      created_date: new Date().getTime(),
+      postId: 4,
+      postAuthor: "이지윤",
+      postTitle: "제목4",
+      postContent: "hello 4",
+      postCreated_date: new Date().getTime(),
     },
   ],
   lastId: 4,
+  selectRowData: {},
 };
 // Action Type
 const MODE_REMOVE = "REMOVE";
@@ -97,6 +98,7 @@ export function postReducer(state = initialState, action) {
             ...action.saveData,
             postId: state.lastId + 1,
           }),
+          selectRowData: {},
         };
       } else {
         // postId 가 있다면 기존 데이터 수정
@@ -109,6 +111,12 @@ export function postReducer(state = initialState, action) {
           ),
         };
       }
+    case MODE_SELECT_ROW:
+      return {
+        // 클릭한 셀의 postId 를 가진 state 만 찾아서 return
+        ...state,
+        selectRowData: state.posts.find((row) => row.postId === action.postId),
+      };
     default:
       return state;
   }

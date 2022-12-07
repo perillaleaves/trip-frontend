@@ -9,6 +9,7 @@ import Account from "./Component/Account";
 import PostEditor from "./Component/PostEditor";
 import PostList from "./Component/PostList";
 import rootReducer from "./module/rootReducer";
+import PostDetail from "./Component/PostDetail";
 
 const store = createStore(rootReducer);
 const Routing = () => {
@@ -18,6 +19,8 @@ const Routing = () => {
         <Route exact path="/*" element={<App />} />
         <Route exact path="/sign" element={<Sign />} />
         <Route exact path="/account" element={<Account />} />
+
+        <Route exact path="/1" element={<PostDetail />} />
         <Route exact path="/posteditor" element={<PostEditor />} />
         <Route exact path="/postlist" element={<PostList />} />
       </Routes>

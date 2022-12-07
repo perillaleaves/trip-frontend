@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import Post from "./Post";
 import "./PostList.css";
 
-const PostList = () => {
+const PostList = ({ onRowClick }) => {
   const { posts } = useSelector((state) => state.postReducer);
 
   return (
@@ -17,11 +17,12 @@ const PostList = () => {
           </tr>
           {posts.map((post) => (
             <Post
-              key={post.id}
-              postId={post.id}
-              postTitle={post.title}
-              postAuthor={post.author}
-              postCreated_date={post.created_date}
+              key={post.postId}
+              postId={post.postId}
+              postTitle={post.postTitle}
+              postAuthor={post.postAuthor}
+              postCreated_date={post.postCreated_date}
+              onRowClick={onRowClick}
             />
           ))}
         </tbody>
