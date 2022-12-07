@@ -1,14 +1,14 @@
 import "./Post.css";
 
-const Post = ({ id, title, author, created_date }) => {
+const Post = ({ postId, postTitle, postAuthor, postCreated_date }) => {
   return (
     <>
-      <div className="post">
-        <div>{id}</div>
-        <div>{title}</div>
-        <div>{author}</div>
-        <div>{created_date}</div>
-      </div>
+      <tr>
+        <td>{postId}</td>
+        <td>{postTitle}</td>
+        <td>{postAuthor}</td>
+        <td>{postCreated_date}</td>
+      </tr>
     </>
   );
 };

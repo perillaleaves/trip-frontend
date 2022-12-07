@@ -18,16 +18,7 @@ const Main = () => {
       <Header />
       <div style={{ display: "flex", height: "100%" }}>
         <Navigator />
-        {console.log(posts)}
-        {posts.map((post) => (
-          <PostList
-            key={post.id}
-            postId={post.id}
-            posttitle={post.title}
-            postContent={post.content}
-            postCreated_date={post.created_date}
-          />
-        ))}
+        <PostList />
       </div>
       <Footer />
     </>
