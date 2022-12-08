@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { postRemove, postSave, postSelectRow } from "../module/reducer";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import PostEditor from "./PostEditor";
 
 const Main = () => {
   const navigate = useNavigate();
@@ -46,6 +47,7 @@ const Main = () => {
       <div style={{ display: "flex", height: "100%" }}>
         <Navigator />
         <PostList onRowClick={onRowClick} />
+        <PostEditor />
       </div>
       <Footer />
     </>

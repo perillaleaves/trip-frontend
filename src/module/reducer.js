@@ -17,6 +17,7 @@ export function signReducer(currentState, action) {
   return newState;
 }
 
+// initState
 const initialState = {
   posts: [
     {
@@ -74,13 +75,8 @@ export const postSelectRow = (postId) => ({
   postId: postId,
 });
 
-// initState
-
 // Reducer
 export function postReducer(state = initialState, action) {
-  if (initialState === undefined) {
-    return console.log("undifined");
-  }
   switch (
     action.type // 클릭한 postId 를 가지지 않은 data 만 return
   ) {
@@ -92,6 +88,8 @@ export function postReducer(state = initialState, action) {
     case MODE_SAVE:
       if (action.saveData.postId === "") {
         // postId 가 없다면 신규 데이터 저장
+        console.log("saved");
+        console.log(initialState);
         return {
           lastId: state.lastId + 1,
           posts: state.posts.concat({
@@ -121,3 +119,4 @@ export function postReducer(state = initialState, action) {
       return state;
   }
 }
+// console.log(initialState.posts);

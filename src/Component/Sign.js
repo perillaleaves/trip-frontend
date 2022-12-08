@@ -49,7 +49,7 @@ const SignStyle = styled.div`
   }
 `;
 const Sign = () => {
-  const pageIndex = useSelector((state) => state.pageIndex);
+  const pageIndex = useSelector((state) => state.signReducer);
   const dispatch = useDispatch();
 
   //global function
