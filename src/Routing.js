@@ -6,7 +6,7 @@ import Sign from "./Component/Sign";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 import Account from "./Component/Account";
-import PostEditor from "./Component/PostEditor";
+import PostUpdate from "./Component/PostUpdate.js";
 import PostList from "./Component/PostList";
 import rootReducer from "./module/rootReducer";
 import PostDetail from "./Component/PostDetail";
@@ -21,7 +21,7 @@ const Routing = () => {
         <Route exact path="/account" element={<Account />} />
 
         <Route exact path="/:data" element={<PostDetail />} />
-        <Route exact path="/posteditor" element={<PostEditor />} />
+        <Route exact path="/postupdate/:data" element={<PostUpdate />} />
         <Route exact path="/postlist" element={<PostList />} />
       </Routes>
     </Provider>

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Post from "./Post";
 import "./PostList.css";
 
-const PostList = ({ onRowClick, inputData, onRemove }) => {
+const PostList = ({ onRowClick, inputData, onRemove, resetForm, onUpdate }) => {
   const { posts } = useSelector((state) => state.postReducer);
   const navigate = useNavigate();
   return (
@@ -28,6 +28,7 @@ const PostList = ({ onRowClick, inputData, onRemove }) => {
               postCreated_date={post.postCreated_date}
               onRowClick={onRowClick}
               onRemove={onRemove}
+              onUpdate={onUpdate}
             />
           ))}
         </tbody>

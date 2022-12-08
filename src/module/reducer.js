@@ -56,6 +56,7 @@ const initialState = {
 const MODE_REMOVE = "REMOVE";
 const MODE_SAVE = "SAVE";
 const MODE_SELECT_ROW = "SELECT_ROW";
+const MODE_UPDATE = "UPDATE";
 
 // Action Create Function
 export const postSave = (saveData) => ({
@@ -73,6 +74,10 @@ export const postRemove = (postId) => ({
 });
 export const postSelectRow = (postId) => ({
   type: MODE_SELECT_ROW,
+  postId: postId,
+});
+export const postUpdate = (postId) => ({
+  type: MODE_UPDATE,
   postId: postId,
 });
 
@@ -113,6 +118,11 @@ export function postReducer(state = initialState, action) {
     case MODE_SELECT_ROW:
       return {
         // 클릭한 셀의 postId 를 가진 state 만 찾아서 return
+        ...state,
+        selectRowData: state.posts.find((row) => row.postId === action.postId),
+      };
+    case MODE_UPDATE:
+      return {
         ...state,
         selectRowData: state.posts.find((row) => row.postId === action.postId),
       };

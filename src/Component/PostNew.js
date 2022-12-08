@@ -1,14 +1,23 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "../App.css";
 import { postSave } from "../module/reducer";
-const PostEditor = () => {
+const PostNew = () => {
   const dispatch = useDispatch();
+  const { selectRowData } = useSelector((state) => state.postReducer);
+
   const [inputValue, setInputValue] = useState({
     postId: "",
-    postTitle: "",
+    postTitle: selectRowData.postTitle,
     postContent: "",
   });
+  const resetForm = () => {
+    setInputValue({
+      postId: "",
+      postTitle: "",
+      postContent: "",
+    });
+  };
 
   function onChange(e) {
     setInputValue({
@@ -24,6 +33,7 @@ const PostEditor = () => {
   function saveBtnClick(e) {
     e.preventDefault();
     onSave(inputValue);
+    resetForm();
   }
 
   return (
@@ -55,4 +65,4 @@ const PostEditor = () => {
   );
 };
 
-export default PostEditor;
+export default PostNew;

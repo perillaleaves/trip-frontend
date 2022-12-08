@@ -7,6 +7,7 @@ const Post = ({
   postCreated_date,
   onRowClick,
   onRemove,
+  onUpdate,
 }) => {
   return (
     <>
@@ -18,7 +19,7 @@ const Post = ({
           {new Date(postCreated_date).toLocaleString()}
         </td>
         <td>
-          <button>수정하기</button>
+          <button onClick={() => onUpdate(postId)}>수정하기</button>
           <button onClick={() => onRemove(postId)}>삭제하기</button>
         </td>
       </tr>
