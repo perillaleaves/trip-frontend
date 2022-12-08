@@ -42,15 +42,20 @@ const Main = () => {
 
   return (
     <>
-      <Header />
-      <div style={{ display: "flex", height: "100%" }}>
-        <Navigator />
-        <PostList
-          onRowClick={onRowClick}
-          onRemove={onRemove}
-          onUpdate={onUpdate}
-        />
-        <PostNew />
+      <Navigator />
+      <div className="main-background">
+        <Header />
+        <div className="main-gap"></div>
+        <div className="main">
+          게시판 리스트
+          <PostList
+            onRowClick={onRowClick}
+            onRemove={onRemove}
+            onUpdate={onUpdate}
+          />
+          새로 글 쓰기
+          <PostNew />
+        </div>
       </div>
       <Footer />
     </>

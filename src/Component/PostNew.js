@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import "../App.css";
+import "./PostNew.css";
 import { postSave } from "../module/reducer";
 const PostNew = () => {
   // global state
@@ -10,7 +10,7 @@ const PostNew = () => {
   // local state
   const [inputValue, setInputValue] = useState({
     postId: "",
-    postTitle: selectRowData.postTitle,
+    postTitle: "",
     postContent: "",
   });
 
@@ -42,12 +42,12 @@ const PostNew = () => {
 
   return (
     <>
-      <div className="post-editor-wrapper">
-        <div className="post-editor">
+      <div className="post-new-wrapper">
+        <div className="post-new">
           <div>
             <span>제목 :</span>
             <input
-              className="post-editor-title-input"
+              className="post-new-title-input"
               name="postTitle"
               onChange={onChange}
               value={inputValue.postTitle}
@@ -56,7 +56,7 @@ const PostNew = () => {
           <div>
             <span>본문 :</span>
             <input
-              className="post-editor-content-input"
+              className="post-new-content-input"
               name="postContent"
               onChange={onChange}
               value={inputValue.postContent}

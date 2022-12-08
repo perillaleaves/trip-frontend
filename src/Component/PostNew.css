@@ -1,0 +1,17 @@
+.post-new-wrapper {
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.167);
+  border-radius: 30px;
+  margin: 30px;
+}
+
+.post-new {
+  margin: 30px;
+}
+.post-new-title-input {
+  width: 400px;
+}
+.post-new-content-input {
+  width: 400px;
+  height: 100px;
+}

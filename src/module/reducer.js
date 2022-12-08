@@ -17,6 +17,7 @@ export function signReducer(currentState, action) {
   }
   return newState;
 }
+
 // POST REDUCER
 // initState
 const initialState = {
@@ -93,8 +94,6 @@ export function postReducer(state = initialState, action) {
     case MODE_SAVE:
       if (action.saveData.postId === "") {
         // postId 가 없다면 신규 데이터 저장
-        console.log("saved");
-        console.log(initialState);
         return {
           lastId: state.lastId + 1,
           posts: state.posts.concat({

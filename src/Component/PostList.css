@@ -1,0 +1,13 @@
+.post-wrapper {
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.167);
+  border-radius: 30px;
+  margin: 30px;
+}
+
+.post {
+  margin: 30px;
+}
+.post-table {
+  width: 600px;
+}

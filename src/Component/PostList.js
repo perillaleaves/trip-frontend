@@ -10,31 +10,33 @@ const PostList = ({ onRowClick, onRemove, onUpdate }) => {
 
   return (
     <div className="post-wrapper">
-      <button onClick={() => navigate("/posteditor")}>새 글 쓰기</button>
+      <div className="post">
+        <button onClick={() => navigate("/posteditor")}>새 글 쓰기</button>
 
-      <table border={1}>
-        <tbody>
-          <tr>
-            <td>id</td>
-            <td>title</td>
-            <td>author</td>
-            <td>time</td>
-            <td>수정, 삭제</td>
-          </tr>
-          {posts.map((post) => (
-            <Post
-              key={post.postId}
-              postId={post.postId}
-              postTitle={post.postTitle}
-              postAuthor={post.postAuthor}
-              postCreated_date={post.postCreated_date}
-              onRowClick={onRowClick}
-              onRemove={onRemove}
-              onUpdate={onUpdate}
-            />
-          ))}
-        </tbody>
-      </table>
+        <table border={1} className="post-table">
+          <tbody>
+            <tr>
+              <td>id</td>
+              <td>title</td>
+              <td>author</td>
+              <td>time</td>
+              <td>수정, 삭제</td>
+            </tr>
+            {posts.map((post) => (
+              <Post
+                key={post.postId}
+                postId={post.postId}
+                postTitle={post.postTitle}
+                postAuthor={post.postAuthor}
+                postCreated_date={post.postCreated_date}
+                onRowClick={onRowClick}
+                onRemove={onRemove}
+                onUpdate={onUpdate}
+              />
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
