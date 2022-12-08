@@ -64,6 +64,7 @@ export const postSave = (saveData) => ({
     postId: saveData.postId,
     postTitle: saveData.postTitle,
     postContent: saveData.postContent,
+    postCreated_date: new Date(),
   },
 });
 export const postRemove = (postId) => ({

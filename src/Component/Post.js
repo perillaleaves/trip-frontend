@@ -13,7 +13,9 @@ const Post = ({
         <td onClick={() => onRowClick(postId)}>{postId}</td>
         <td onClick={() => onRowClick(postId)}>{postTitle}</td>
         <td onClick={() => onRowClick(postId)}>{postAuthor}</td>
-        <td onClick={() => onRowClick(postId)}>{postCreated_date}</td>
+        <td onClick={() => onRowClick(postId)}>
+          {new Date(postCreated_date).toLocaleString()}
+        </td>
       </tr>
     </>
   );
