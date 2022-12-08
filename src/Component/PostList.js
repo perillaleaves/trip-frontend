@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Post from "./Post";
 import "./PostList.css";
 
-const PostList = ({ onRowClick, inputData }) => {
+const PostList = ({ onRowClick, inputData, onRemove }) => {
   const { posts } = useSelector((state) => state.postReducer);
   const navigate = useNavigate();
   return (
@@ -17,6 +17,7 @@ const PostList = ({ onRowClick, inputData }) => {
             <td>title</td>
             <td>author</td>
             <td>time</td>
+            <td>수정, 삭제</td>
           </tr>
           {posts.map((post) => (
             <Post
@@ -26,6 +27,7 @@ const PostList = ({ onRowClick, inputData }) => {
               postAuthor={post.postAuthor}
               postCreated_date={post.postCreated_date}
               onRowClick={onRowClick}
+              onRemove={onRemove}
             />
           ))}
         </tbody>

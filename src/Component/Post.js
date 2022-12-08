@@ -6,6 +6,7 @@ const Post = ({
   postAuthor,
   postCreated_date,
   onRowClick,
+  onRemove,
 }) => {
   return (
     <>
@@ -15,6 +16,10 @@ const Post = ({
         <td onClick={() => onRowClick(postId)}>{postAuthor}</td>
         <td onClick={() => onRowClick(postId)}>
           {new Date(postCreated_date).toLocaleString()}
+        </td>
+        <td>
+          <button>수정하기</button>
+          <button onClick={() => onRemove(postId)}>삭제하기</button>
         </td>
       </tr>
     </>

@@ -3,7 +3,7 @@ import Header from "./Header";
 import Navigator from "./Navigator";
 import PostList from "./PostList";
 import { useDispatch, useSelector } from "react-redux";
-import { postRemove, postSave, postSelectRow } from "../module/reducer";
+import { postRemove, postSelectRow } from "../module/reducer";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PostEditor from "./PostEditor";
@@ -14,7 +14,6 @@ const Main = () => {
   const { selectRowData } = useSelector((state) => state.postReducer);
   const dispatch = useDispatch();
   const onRemove = (postId) => dispatch(postRemove(postId));
-  const onSave = (saveData) => dispatch(postSave(saveData));
 
   // User Function
   const onRowClick = (postId) => {
@@ -46,7 +45,7 @@ const Main = () => {
       <Header />
       <div style={{ display: "flex", height: "100%" }}>
         <Navigator />
-        <PostList onRowClick={onRowClick} />
+        <PostList onRowClick={onRowClick} onRemove={onRemove} />
         <PostEditor />
       </div>
       <Footer />
