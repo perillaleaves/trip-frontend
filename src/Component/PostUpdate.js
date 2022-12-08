@@ -3,13 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import "../App.css";
 import { postSave } from "../module/reducer";
 const PostUpdate = () => {
+  // global state
   const dispatch = useDispatch();
   const { selectRowData } = useSelector((state) => state.postReducer);
-
+  // local state
   const [inputValue, setInputValue] = useState({
     postTitle: selectRowData.postTitle,
     postContent: selectRowData.postContent,
   });
+  // local fucntion
   const resetForm = () => {
     setInputValue({
       postId: "",
@@ -18,22 +20,23 @@ const PostUpdate = () => {
     });
   };
 
-  function onChange(e) {
+  const onChange = (e) => {
     setInputValue({
       ...inputValue,
       [e.target.name]: e.target.value,
     });
-  }
+  };
 
-  function onSave(saveData) {
+  const onSave = (saveData) => {
     dispatch(postSave(saveData));
     console.log(saveData);
-  }
-  function saveBtnClick(e) {
+  };
+
+  const saveBtnClick = (e) => {
     e.preventDefault();
     onSave(inputValue);
     resetForm();
-  }
+  };
 
   return (
     <>

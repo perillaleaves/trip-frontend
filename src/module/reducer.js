@@ -1,3 +1,4 @@
+// SIGN REDUCER
 export function signReducer(currentState, action) {
   if (currentState === undefined) {
     return {
@@ -16,7 +17,7 @@ export function signReducer(currentState, action) {
   }
   return newState;
 }
-
+// POST REDUCER
 // initState
 const initialState = {
   posts: [
@@ -83,9 +84,7 @@ export const postUpdate = (postId) => ({
 
 // Reducer
 export function postReducer(state = initialState, action) {
-  switch (
-    action.type // 클릭한 postId 를 가지지 않은 data 만 return
-  ) {
+  switch (action.type) {
     case MODE_REMOVE:
       return {
         ...state,
@@ -130,4 +129,3 @@ export function postReducer(state = initialState, action) {
       return state;
   }
 }
-// console.log(initialState.posts);

@@ -3,9 +3,11 @@ import { useNavigate } from "react-router-dom";
 import Post from "./Post";
 import "./PostList.css";
 
-const PostList = ({ onRowClick, inputData, onRemove, resetForm, onUpdate }) => {
+const PostList = ({ onRowClick, onRemove, onUpdate }) => {
+  // global state
   const { posts } = useSelector((state) => state.postReducer);
   const navigate = useNavigate();
+
   return (
     <div className="post-wrapper">
       <button onClick={() => navigate("/posteditor")}>새 글 쓰기</button>

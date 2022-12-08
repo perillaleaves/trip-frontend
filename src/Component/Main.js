@@ -6,14 +6,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { postRemove, postSelectRow, postUpdate } from "../module/reducer";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import PostUpdate from "./PostUpdate.js";
 import PostNew from "./PostNew";
 
 const Main = () => {
-  const navigate = useNavigate();
-  const [inputData, setInputData] = useState();
+  // global state
   const { selectRowData } = useSelector((state) => state.postReducer);
+  // local state
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [inputData, setInputData] = useState();
+
+  // User Function
   const onRemove = (postId) => dispatch(postRemove(postId));
   const onUpdate = (postId) => {
     dispatch(postUpdate(postId));
@@ -25,9 +28,7 @@ const Main = () => {
     });
     navigate(`/postupdate/${postId}`);
   };
-  // User Function
   const onRowClick = (postId) => {
-    // dispatch 를 하고,
     dispatch(postSelectRow(postId));
     setInputData({
       postId: selectRowData.postId,
@@ -37,17 +38,6 @@ const Main = () => {
     });
     console.log(inputData);
     navigate(`/${postId}`);
-    // inputData 에 selectRowData 의 값을 반영
-    // if (JSON.stringify(selectRowData) !== "{}") {
-    //   setInputData({
-    //     postId: selectRowData.postId,
-    //     postTitle: selectRowData.postTitle,
-    //     postContent: selectRowData.postContent,
-    //     postAuthor: selectRowData.postAuthor,
-    //   });
-    //   console.log(inputData);
-    //   navigate("/1");
-    // }
   };
 
   return (

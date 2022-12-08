@@ -5,8 +5,9 @@ import Navigator from "./Navigator";
 import "./PostDetail.css";
 
 const PostDetail = () => {
+  // global state
   const { selectRowData } = useSelector((state) => state.postReducer);
-  console.log(selectRowData);
+
   return (
     <>
       <Header />
