@@ -1,16 +1,19 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import "../App.css";
 import { postSave } from "../module/reducer";
-import PostList from "./PostList";
 const PostUpdate = () => {
   // global state
   const dispatch = useDispatch();
   const { selectRowData } = useSelector((state) => state.postReducer);
   // local state
+  const navigate = useNavigate();
   const [inputValue, setInputValue] = useState({
+    postId: selectRowData.postId,
     postTitle: selectRowData.postTitle,
     postContent: selectRowData.postContent,
+    postCreated_date: new Date(),
   });
   // local fucntion
   const resetForm = () => {
@@ -37,6 +40,7 @@ const PostUpdate = () => {
     e.preventDefault();
     onSave(inputValue);
     resetForm();
+    navigate("/");
   };
 
   return (
@@ -64,7 +68,6 @@ const PostUpdate = () => {
           <button onClick={saveBtnClick}>저장</button>
         </div>
       </div>
-      <PostList />
     </>
   );
 };
