@@ -36,7 +36,6 @@ const Main = () => {
       postContent: selectRowData.postContent,
       postAuthor: selectRowData.postAuthor,
     });
-    console.log(inputData);
     navigate(`/${postId}`);
   };
 

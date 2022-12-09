@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "../App.css";
 import { postSave } from "../module/reducer";
+import PostList from "./PostList";
 const PostUpdate = () => {
   // global state
   const dispatch = useDispatch();
@@ -63,6 +64,7 @@ const PostUpdate = () => {
           <button onClick={saveBtnClick}>저장</button>
         </div>
       </div>
+      <PostList />
     </>
   );
 };

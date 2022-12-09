@@ -67,7 +67,7 @@ export const postSave = (saveData) => ({
     postId: saveData.postId,
     postTitle: saveData.postTitle,
     postContent: saveData.postContent,
-    postCreated_date: new Date(),
+    postCreated_date: saveData.postCreated_date,
   },
 });
 export const postRemove = (postId) => ({
@@ -104,6 +104,7 @@ export function postReducer(state = initialState, action) {
         };
       } else {
         // postId 가 있다면 기존 데이터 수정
+        console.log("수정이군요");
         return {
           ...state,
           posts: state.posts.map((data) =>

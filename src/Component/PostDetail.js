@@ -17,7 +17,10 @@ const PostDetail = () => {
           <div className="post-detail-wrapper">
             <div>작성자 : {selectRowData.postAuthor}</div>
             <div>제목 : {selectRowData.postTitle}</div>
-            <div>작성일 : {selectRowData.postCreated_date}</div>
+            <div>
+              작성일 :{" "}
+              {new Date(selectRowData.postCreated_date).toLocaleString()}
+            </div>
             <div>내용 :</div>
             <span>{selectRowData.postContent}</span>
           </div>

@@ -12,6 +12,7 @@ const PostNew = () => {
     postId: "",
     postTitle: "",
     postContent: "",
+    postCreated_date: new Date(),
   });
 
   //local function
