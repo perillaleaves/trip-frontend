@@ -1,8 +1,9 @@
 import { useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import API from "../API/Api.js";
+import { getUserData } from "../module/reducer";
 
 const SignInStyle = styled.div`
   .login-wrapper {
@@ -73,9 +74,13 @@ const SignInStyle = styled.div`
 
 const SignIn = ({ onClickSignUp, onClickForgotPW }) => {
   //global state
+  const dispatch = useDispatch();
   const pageIndex = useSelector((state) => state.pageIndex);
-
+  const userDataInitialState = useSelector(
+    (state) => state.userDataInitialState
+  );
   //local state
+
   const idInput = useRef();
   const passwordInput = useRef();
   const [inputValue, setInputValue] = useState({
@@ -85,24 +90,31 @@ const SignIn = ({ onClickSignUp, onClickForgotPW }) => {
   const navigate = useNavigate();
 
   //function
+  function getUser(userdata) {
+    dispatch(getUserData(userdata));
+  }
   function onChange(e) {
     setInputValue({
       ...inputValue,
       [e.target.name]: e.target.value,
     });
   }
+
   function onClickSignIn() {
     API.signin(inputValue.loginId, inputValue.password).then((data) => {
       if (data.status === 200) {
-        if (data.data.code === "login") {
+        if (data.data.success.code === "login") {
           // 로그인 성공시 로그인 정보 갖고있기
-          navigate("/login");
+
+          getUser(data.data.data.data);
+          console.log(getUser(data.data.data.data));
+          navigate("/account");
         } else {
-          if (data.data.error.code === "EmptyLoginId") {
+          if (data.data.error.success === "EmptyLoginId") {
             idInput.current.focus();
             alert(data.data.error.message);
           }
-          if (data.data.error.code === "InconsistencyPassword") {
+          if (data.data.error.success === "InconsistencyPassword") {
             passwordInput.current.focus();
             alert(data.data.error.message);
           }

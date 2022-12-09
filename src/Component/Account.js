@@ -1,12 +1,15 @@
+import { useSelector } from "react-redux";
+
 const Account = () => {
+  const userDataInitialState = useSelector((state) => state.userReducer);
   return (
     <>
-      <div>계정</div>
-      <div>이름</div>
-      <div>아이디</div>
-      <div>비밀번호</div>
-      <div>휴대폰번호</div>
-      <div>이메일</div>
+      <div>id : {userDataInitialState.id}</div>
+      <div>name :{userDataInitialState.name}</div>
+      <div>loginId : {userDataInitialState.loginId}</div>
+      <div>password : {userDataInitialState.password}</div>
+      <div>phoneNum : {userDataInitialState.phoneNum}</div>
+      <div>email : {userDataInitialState.email}</div>
     </>
   );
 };

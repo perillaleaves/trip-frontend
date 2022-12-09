@@ -52,8 +52,6 @@ const Main = () => {
             onRemove={onRemove}
             onUpdate={onUpdate}
           />
-          새로 글 쓰기
-          <PostNew />
         </div>
       </div>
       <Footer />

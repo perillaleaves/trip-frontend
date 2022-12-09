@@ -20,7 +20,7 @@ export function signReducer(currentState, action) {
 
 // POST REDUCER
 // initState
-const initialState = {
+const postInitialState = {
   posts: [
     {
       postId: 1,
@@ -84,7 +84,7 @@ export const postUpdate = (postId) => ({
 });
 
 // Reducer
-export function postReducer(state = initialState, action) {
+export function postReducer(state = postInitialState, action) {
   switch (action.type) {
     case MODE_REMOVE:
       return {
@@ -124,6 +124,50 @@ export function postReducer(state = initialState, action) {
       return {
         ...state,
         selectRowData: state.posts.find((row) => row.postId === action.postId),
+      };
+    default:
+      return state;
+  }
+}
+// USER REDUCER
+// INIT
+const userDataInitialState = {
+  id: "",
+  name: "",
+  loginId: "",
+  password: "",
+  phoneNum: "",
+  email: "",
+  isLogin: null,
+};
+
+//ACTION TYPE
+const MODE_GET_USER_DATA = "GETUSER";
+
+export const getUserData = (userData) => ({
+  type: MODE_GET_USER_DATA,
+  userData: {
+    id: userData.id,
+    name: userData.name,
+    loginId: userData.loginId,
+    password: userData.password,
+    phoneNum: userData.phoneNum,
+    email: userData.email,
+    isLogin: null,
+  },
+});
+
+export function userReducer(state = userDataInitialState, action) {
+  switch (action.type) {
+    case MODE_GET_USER_DATA:
+      return {
+        id: action.userData.id,
+        name: action.userData.name,
+        loginId: action.userData.loginId,
+        password: action.userData.password,
+        phoneNum: action.userData.phoneNum,
+        email: action.userData.email,
+        isLogin: null,
       };
     default:
       return state;

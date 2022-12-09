@@ -11,7 +11,7 @@ const PostList = ({ onRowClick, onRemove, onUpdate }) => {
   return (
     <div className="post-wrapper">
       <div className="post">
-        <button onClick={() => navigate("/posteditor")}>새 글 쓰기</button>
+        <button onClick={() => navigate("/postnew")}>새 글 쓰기</button>
 
         <table border={1} className="post-table">
           <tbody>
