@@ -1,22 +1,58 @@
 // SIGN REDUCER
-export function signReducer(currentState, action) {
-  if (currentState === undefined) {
-    return {
-      pageIndex: 0,
-    };
+// initState
+const signInitialState = {
+  pageIndex: 0,
+};
+// Action Type
+const MODE_SIGN_UP = "SIGNUP";
+const MODE_SIGN_IN = "SIGNIN";
+const MODE_FORGOT_PW = "FORGOTPW";
+export const signUp = () => ({
+  type: MODE_SIGN_UP,
+});
+export const signIn = () => ({
+  type: MODE_SIGN_IN,
+});
+export const forgotPW = () => ({
+  type: MODE_FORGOT_PW,
+});
+export function signReducer(state = signInitialState, action) {
+  switch (action.type) {
+    case MODE_SIGN_UP:
+      return {
+        pageIndex: -1, ///fix me
+      };
+    case MODE_SIGN_IN:
+      return {
+        pageIndex: 0,
+      };
+    case MODE_FORGOT_PW:
+      return {
+        pageIndex: 1,
+      };
+    default:
+      return state;
   }
-  const newState = { ...currentState };
-  if (action.type === "SIGNUP") {
-    newState.pageIndex = -1;
-  }
-  if (action.type === "SIGNIN") {
-    newState.pageIndex = 0;
-  }
-  if (action.type === "FORGOTPW") {
-    newState.pageIndex = +1;
-  }
-  return newState;
 }
+
+// export function signReducer(state = signInitialState, action) {
+//   if (currentState === undefined) {
+//     return {
+//       pageIndex: 0,
+//     };
+//   }
+//   const newState = { ...currentState };
+//   if (action.type === "SIGNUP") {
+//     newState.pageIndex = -1;
+//   }
+//   if (action.type === "SIGNIN") {
+//     newState.pageIndex = 0;
+//   }
+//   if (action.type === "FORGOTPW") {
+//     newState.pageIndex = +1;
+//   }
+//   return newState;
+// }
 
 // POST REDUCER
 // initState

@@ -177,17 +177,16 @@ const SignUpStyle = styled.div`
 `;
 const SignUp = ({ onClickSignIn }) => {
   //global state
-  const pageIndex = useSelector((state) => state.pageIndex);
+  const signInitialState = useSelector((state) => state.signReducer);
 
   //local state
 
-  //FIX
   const nameInput = useRef();
   const idInput = useRef();
   const passwordInput = useRef();
   const phoneNumInput = useRef();
   const emailInput = useRef();
-  // 반복되는 선언 줄이기
+
   const [existId, setExistId] = useState(false);
   const [existPhoneNum, setExistPhoneNum] = useState(false);
   const [existEmail, setExistEmail] = useState(false);
@@ -198,7 +197,6 @@ const SignUp = ({ onClickSignIn }) => {
   const [phoneNumTouched, setPhoneNumTouched] = useState(false);
   const [emailTouched, setEmailTouched] = useState(false);
 
-  // 반복되는 선언 줄이기
   const [nameValid, setNameValid] = useState(false);
   const [idValid, setIdValid] = useState(false);
   const [passwordValid, setPasswordValid] = useState(false);
@@ -372,215 +370,223 @@ const SignUp = ({ onClickSignIn }) => {
     }
   };
   return (
-    <SignUpStyle>
-      <div className="sign-up-wrapper">
-        <div
-          className="sign-up-body"
-          style={{ transform: `translateX(${-pageIndex * 100 - 100}vw)` }}
-        >
-          <div className="sign-up-holder-container">
-            <div className="sign-up-holder-icon">icon</div>
-            <div className="sign-up-holder">
-              <div className="sign-up-holder-title">Sign up now,</div>
-              <div className="sign-up-holder-subtitle">Let's get started !</div>
-            </div>
-          </div>
-          <div className="sign-up-form">
-            <div className="sign-up-form-main">
-              <div className="sign-up-form-title">Sign Up</div>
-              <div className="sign-up-form-name">
-                <input
-                  className="sign-up-input sign-up-input-name"
-                  name="name"
-                  ref={nameInput}
-                  value={inputValue.name}
-                  onChange={onChangeName}
-                  onBlur={() => setNameTouched(true)}
-                  required
-                />
-                {nameTouched ? (
-                  <>
-                    <FontAwesomeIcon
-                      icon={faCheck}
-                      className={nameValid ? "faCheck valid" : "faCheck"}
-                    />
-                    <FontAwesomeIcon
-                      icon={faCircleXmark}
-                      className={
-                        nameValid ? "faCircleXmark" : "faCircleXmark invalid"
-                      }
-                    />
-                  </>
-                ) : (
-                  <></>
-                )}
-                <span className="place-label place-label-name">NAME</span>
+    <>
+      <SignUpStyle>
+        <div className="sign-up-wrapper">
+          <div
+            className="sign-up-body"
+            style={{
+              transform: `translateX(${
+                -signInitialState.pageIndex * 100 - 100
+              }vw)`,
+            }}
+          >
+            <div className="sign-up-holder-container">
+              <div className="sign-up-holder-icon">icon</div>
+              <div className="sign-up-holder">
+                <div className="sign-up-holder-title">Sign up now,</div>
+                <div className="sign-up-holder-subtitle">
+                  Let's get started !
+                </div>
               </div>
-              <div>
-                <input
-                  className={
-                    existId
-                      ? "sign-up-input sign-up-input-id exist-input"
-                      : "sign-up-input sign-up-input-id"
-                  }
-                  name="loginId"
-                  ref={idInput}
-                  value={inputValue.loginId}
-                  onChange={onChangeId}
-                  onBlur={() => setIdTouched(true)}
-                  required
-                />
-                {idTouched ? (
-                  <>
-                    <FontAwesomeIcon
-                      icon={faCheck}
-                      className={idValid ? "faCheck valid" : "faCheck"}
-                    />
-                    <FontAwesomeIcon
-                      icon={faCircleXmark}
-                      className={
-                        idValid ? "faCircleXmark" : "faCircleXmark invalid"
-                      }
-                    />
-                  </>
-                ) : (
-                  <></>
-                )}
+            </div>
+            <div className="sign-up-form">
+              <div className="sign-up-form-main">
+                <div className="sign-up-form-title">Sign Up</div>
+                <div className="sign-up-form-name">
+                  <input
+                    className="sign-up-input sign-up-input-name"
+                    name="name"
+                    ref={nameInput}
+                    value={inputValue.name}
+                    onChange={onChangeName}
+                    onBlur={() => setNameTouched(true)}
+                    required
+                  />
+                  {nameTouched ? (
+                    <>
+                      <FontAwesomeIcon
+                        icon={faCheck}
+                        className={nameValid ? "faCheck valid" : "faCheck"}
+                      />
+                      <FontAwesomeIcon
+                        icon={faCircleXmark}
+                        className={
+                          nameValid ? "faCircleXmark" : "faCircleXmark invalid"
+                        }
+                      />
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                  <span className="place-label place-label-name">NAME</span>
+                </div>
+                <div>
+                  <input
+                    className={
+                      existId
+                        ? "sign-up-input sign-up-input-id exist-input"
+                        : "sign-up-input sign-up-input-id"
+                    }
+                    name="loginId"
+                    ref={idInput}
+                    value={inputValue.loginId}
+                    onChange={onChangeId}
+                    onBlur={() => setIdTouched(true)}
+                    required
+                  />
+                  {idTouched ? (
+                    <>
+                      <FontAwesomeIcon
+                        icon={faCheck}
+                        className={idValid ? "faCheck valid" : "faCheck"}
+                      />
+                      <FontAwesomeIcon
+                        icon={faCircleXmark}
+                        className={
+                          idValid ? "faCircleXmark" : "faCircleXmark invalid"
+                        }
+                      />
+                    </>
+                  ) : (
+                    <></>
+                  )}
 
-                <span
-                  className={
-                    existId
-                      ? "place-label place-label-id exist-placeholder"
-                      : "place-label place-label-id"
-                  }
-                >
-                  ID
-                </span>
+                  <span
+                    className={
+                      existId
+                        ? "place-label place-label-id exist-placeholder"
+                        : "place-label place-label-id"
+                    }
+                  >
+                    ID
+                  </span>
+                </div>
+                <div>
+                  <input
+                    className="sign-up-input sign-up-input-pw"
+                    type="password"
+                    name="password"
+                    ref={passwordInput}
+                    value={inputValue.password}
+                    onChange={onChangePW}
+                    onBlur={() => setPasswordTouched(true)}
+                    required
+                  />
+                  {passwordTouched ? (
+                    <>
+                      <FontAwesomeIcon
+                        icon={faCheck}
+                        className={passwordValid ? "faCheck valid" : "faCheck"}
+                      />
+                      <FontAwesomeIcon
+                        icon={faCircleXmark}
+                        className={
+                          passwordValid
+                            ? "faCircleXmark"
+                            : "faCircleXmark invalid"
+                        }
+                      />
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                  <span className="place-label place-label-pw">PASSWORD</span>
+                </div>
+                <div>
+                  <input
+                    className={
+                      existPhoneNum
+                        ? "sign-up-input sign-up-input-phoneNum exist-input"
+                        : "sign-up-input sign-up-input-phoneNum"
+                    }
+                    name="phoneNum"
+                    ref={phoneNumInput}
+                    value={inputValue.phoneNum}
+                    onChange={onChangePN}
+                    onBlur={() => setPhoneNumTouched(true)}
+                    required
+                  />
+                  {phoneNumTouched ? (
+                    <>
+                      <FontAwesomeIcon
+                        icon={faCheck}
+                        className={phoneNumValid ? "faCheck valid" : "faCheck"}
+                      />
+                      <FontAwesomeIcon
+                        icon={faCircleXmark}
+                        className={
+                          phoneNumValid
+                            ? "faCircleXmark"
+                            : "faCircleXmark invalid"
+                        }
+                      />
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                  <span
+                    className={
+                      existPhoneNum
+                        ? "place-label place-label-phoneNum exist-placeholder"
+                        : "place-label place-label-phoneNum"
+                    }
+                  >
+                    PHONENUMBER
+                  </span>
+                </div>
+                <div>
+                  <input
+                    className={
+                      existEmail
+                        ? "sign-up-input sign-up-input-email exist-input"
+                        : "sign-up-input sign-up-input-email"
+                    }
+                    name="email"
+                    type="email"
+                    ref={emailInput}
+                    value={inputValue.email}
+                    onChange={onChangeEmail}
+                    onBlur={() => setEmailTouched(true)}
+                    required
+                  />
+                  {emailTouched ? (
+                    <>
+                      <FontAwesomeIcon
+                        icon={faCheck}
+                        className={emailValid ? "faCheck valid" : "faCheck"}
+                      />
+                      <FontAwesomeIcon
+                        icon={faCircleXmark}
+                        className={
+                          emailValid ? "faCircleXmark" : "faCircleXmark invalid"
+                        }
+                      />
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                  <span
+                    className={
+                      existEmail
+                        ? "place-label place-label-email exist-placeholder"
+                        : "place-label place-label-email"
+                    }
+                  >
+                    EMAIL
+                  </span>
+                </div>
               </div>
-              <div>
-                <input
-                  className="sign-up-input sign-up-input-pw"
-                  type="password"
-                  name="password"
-                  ref={passwordInput}
-                  value={inputValue.password}
-                  onChange={onChangePW}
-                  onBlur={() => setPasswordTouched(true)}
-                  required
-                />
-                {passwordTouched ? (
-                  <>
-                    <FontAwesomeIcon
-                      icon={faCheck}
-                      className={passwordValid ? "faCheck valid" : "faCheck"}
-                    />
-                    <FontAwesomeIcon
-                      icon={faCircleXmark}
-                      className={
-                        passwordValid
-                          ? "faCircleXmark"
-                          : "faCircleXmark invalid"
-                      }
-                    />
-                  </>
-                ) : (
-                  <></>
-                )}
-                <span className="place-label place-label-pw">PASSWORD</span>
-              </div>
-              <div>
-                <input
-                  className={
-                    existPhoneNum
-                      ? "sign-up-input sign-up-input-phoneNum exist-input"
-                      : "sign-up-input sign-up-input-phoneNum"
-                  }
-                  name="phoneNum"
-                  ref={phoneNumInput}
-                  value={inputValue.phoneNum}
-                  onChange={onChangePN}
-                  onBlur={() => setPhoneNumTouched(true)}
-                  required
-                />
-                {phoneNumTouched ? (
-                  <>
-                    <FontAwesomeIcon
-                      icon={faCheck}
-                      className={phoneNumValid ? "faCheck valid" : "faCheck"}
-                    />
-                    <FontAwesomeIcon
-                      icon={faCircleXmark}
-                      className={
-                        phoneNumValid
-                          ? "faCircleXmark"
-                          : "faCircleXmark invalid"
-                      }
-                    />
-                  </>
-                ) : (
-                  <></>
-                )}
-                <span
-                  className={
-                    existPhoneNum
-                      ? "place-label place-label-phoneNum exist-placeholder"
-                      : "place-label place-label-phoneNum"
-                  }
-                >
-                  PHONENUMBER
-                </span>
-              </div>
-              <div>
-                <input
-                  className={
-                    existEmail
-                      ? "sign-up-input sign-up-input-email exist-input"
-                      : "sign-up-input sign-up-input-email"
-                  }
-                  name="email"
-                  type="email"
-                  ref={emailInput}
-                  value={inputValue.email}
-                  onChange={onChangeEmail}
-                  onBlur={() => setEmailTouched(true)}
-                  required
-                />
-                {emailTouched ? (
-                  <>
-                    <FontAwesomeIcon
-                      icon={faCheck}
-                      className={emailValid ? "faCheck valid" : "faCheck"}
-                    />
-                    <FontAwesomeIcon
-                      icon={faCircleXmark}
-                      className={
-                        emailValid ? "faCircleXmark" : "faCircleXmark invalid"
-                      }
-                    />
-                  </>
-                ) : (
-                  <></>
-                )}
-                <span
-                  className={
-                    existEmail
-                      ? "place-label place-label-email exist-placeholder"
-                      : "place-label place-label-email"
-                  }
-                >
-                  EMAIL
-                </span>
-              </div>
-            </div>
-            <div className="sign-up-form-other">
-              <div className="sign-up">
-                <button onClick={test}>Sign Up</button>
+              <div className="sign-up-form-other">
+                <div className="sign-up">
+                  <button onClick={handleSubmit}>Sign Up</button>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </SignUpStyle>
+      </SignUpStyle>
+    </>
   );
 };
 

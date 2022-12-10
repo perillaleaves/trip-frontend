@@ -75,7 +75,7 @@ const SignInStyle = styled.div`
 const SignIn = ({ onClickSignUp, onClickForgotPW }) => {
   //global state
   const dispatch = useDispatch();
-  const pageIndex = useSelector((state) => state.pageIndex);
+  const signInitialState = useSelector((state) => state.signReducer);
   const userDataInitialState = useSelector(
     (state) => state.userDataInitialState
   );
@@ -133,7 +133,9 @@ const SignIn = ({ onClickSignUp, onClickForgotPW }) => {
         <div className="login-wrapper">
           <div
             className="login-body"
-            style={{ transform: `translateX(${-pageIndex * 100}vw)` }}
+            style={{
+              transform: `translateX(${-signInitialState.pageIndex * 100}vw)`,
+            }}
           >
             <div className="login-form">
               <div className="login-form-main">
