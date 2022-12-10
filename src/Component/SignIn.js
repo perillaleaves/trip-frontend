@@ -103,18 +103,18 @@ const SignIn = ({ onClickSignUp, onClickForgotPW }) => {
   function onClickSignIn() {
     API.signin(inputValue.loginId, inputValue.password).then((data) => {
       if (data.status === 200) {
-        if (data.data.success.code === "login") {
+        console.log(data.data.error);
+        if (data.data.error === null) {
           // 로그인 성공시 로그인 정보 갖고있기
-
           getUser(data.data.data.data);
           console.log(getUser(data.data.data.data));
           navigate("/account");
         } else {
-          if (data.data.error.success === "EmptyLoginId") {
+          if (data.data.error?.success === "EmptyLoginId") {
             idInput.current.focus();
             alert(data.data.error.message);
           }
-          if (data.data.error.success === "InconsistencyPassword") {
+          if (data.data.error?.success === "InconsistencyPassword") {
             passwordInput.current.focus();
             alert(data.data.error.message);
           }

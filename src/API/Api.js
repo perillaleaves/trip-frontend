@@ -36,7 +36,7 @@ const API = {
   },
   idoverlap: async (loginId) => {
     // ID 중복검사 API CALL
-    const data = await axios.get(`${API_base}/overlap/loginId`, {
+    const data = await axios.get(`${API_base}/overlap/loginid`, {
       params: {
         loginId: loginId,
       },
@@ -46,7 +46,7 @@ const API = {
   },
   phoneNumoverlap: async (phoneNum) => {
     // ID 중복검사 API CALL
-    const data = await axios.get(`${API_base}/overlap/phoneNum`, {
+    const data = await axios.get(`${API_base}/overlap/phonenumber`, {
       params: {
         phoneNum: phoneNum,
       },

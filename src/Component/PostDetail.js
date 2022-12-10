@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import CommentList from "./CommentList";
 import Footer from "./Footer";
 import Header from "./Header";
 import Navigator from "./Navigator";
@@ -25,6 +26,9 @@ const PostDetail = () => {
             <span>{selectRowData.postContent}</span>
           </div>
         </div>
+      </div>
+      <div>
+        <CommentList />
       </div>
       <Footer />
     </>
