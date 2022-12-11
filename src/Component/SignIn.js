@@ -91,6 +91,7 @@ const SignIn = ({ onClickSignUp, onClickForgotPW }) => {
 
   //function
   function getUser(userdata) {
+    console.log(userdata);
     dispatch(getUserData(userdata));
   }
   function onChange(e) {
@@ -103,11 +104,20 @@ const SignIn = ({ onClickSignUp, onClickForgotPW }) => {
   function onClickSignIn() {
     API.signin(inputValue.loginId, inputValue.password).then((data) => {
       if (data.status === 200) {
-        console.log(data.data.error);
         if (data.data.error === null) {
           // 로그인 성공시 로그인 정보 갖고있기
-          getUser(data.data.data.data);
-          console.log(getUser(data.data.data.data));
+          // console.log("userData", getUser(data.data.data.user));
+          // getUser(data.data.data.user);
+          console.log(data.data.data.user);
+          // local storage 값 저장 ----> token 이 있으면 token을 서버에 요청해 내정보에 값을 받아올 수 있지만, token으로 하지 않으므로 모든 데이터 저장합니다.
+          let userData = data.data.data.user;
+          localStorage.clear();
+          localStorage.setItem("id", userData.id);
+          localStorage.setItem("name", userData.name);
+          localStorage.setItem("loginId", userData.loginId);
+          localStorage.setItem("password", userData.password);
+          localStorage.setItem("phoneNum", userData.phoneNum);
+          localStorage.setItem("email", userData.email);
           navigate("/account");
         } else {
           if (data.data.error?.success === "EmptyLoginId") {

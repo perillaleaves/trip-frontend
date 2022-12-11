@@ -12,7 +12,6 @@ const API = {
       { withCredentials: true }
     );
     if (data.status === 200) {
-      console.log(data);
       return data;
     } else {
       console.log("error", data.status);

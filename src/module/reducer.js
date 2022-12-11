@@ -20,7 +20,7 @@ export function signReducer(state = signInitialState, action) {
   switch (action.type) {
     case MODE_SIGN_UP:
       return {
-        pageIndex: -1, ///fix me
+        pageIndex: -1,
       };
     case MODE_SIGN_IN:
       return {
@@ -34,25 +34,6 @@ export function signReducer(state = signInitialState, action) {
       return state;
   }
 }
-
-// export function signReducer(state = signInitialState, action) {
-//   if (currentState === undefined) {
-//     return {
-//       pageIndex: 0,
-//     };
-//   }
-//   const newState = { ...currentState };
-//   if (action.type === "SIGNUP") {
-//     newState.pageIndex = -1;
-//   }
-//   if (action.type === "SIGNIN") {
-//     newState.pageIndex = 0;
-//   }
-//   if (action.type === "FORGOTPW") {
-//     newState.pageIndex = +1;
-//   }
-//   return newState;
-// }
 
 // POST REDUCER
 // initState

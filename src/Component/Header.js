@@ -1,6 +1,11 @@
+import { useNavigate } from "react-router-dom";
 import "./Header.css";
 
 const Header = () => {
+  const navigate = useNavigate();
+  const onAccountClick = () => {
+    navigate("/account");
+  };
   return (
     <>
       <div className="header-wrapper">
@@ -14,7 +19,7 @@ const Header = () => {
           </div>
 
           <div className="myaccount">
-            <button>내정보</button>
+            <button onClick={onAccountClick}>내정보</button>
           </div>
         </div>
       </div>
