@@ -111,7 +111,7 @@ const SignIn = ({ onClickSignUp, onClickForgotPW }) => {
           localStorage.setItem("password", userData.password);
           localStorage.setItem("phoneNum", userData.phoneNum);
           localStorage.setItem("email", userData.email);
-          navigate("/account");
+          navigate("/");
         } else {
           if (data.data.error?.success === "EmptyLoginId") {
             idInput.current.focus();

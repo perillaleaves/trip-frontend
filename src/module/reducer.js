@@ -85,6 +85,7 @@ export const postSave = (saveData) => ({
   type: MODE_SAVE,
   saveData: {
     postId: saveData.postId,
+    postAuthor: localStorage.name,
     postTitle: saveData.postTitle,
     postContent: saveData.postContent,
     postCreated_date: saveData.postCreated_date,

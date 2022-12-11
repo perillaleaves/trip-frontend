@@ -1,0 +1,26 @@
+.account-form-wrapper {
+  background-color: #fff;
+  position: absolute;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 800px;
+  height: 500px;
+  border-radius: 10px;
+}
+.account-form {
+  margin: 0 30px;
+}
+.account-title {
+}
+
+.account-detail-form {
+  display: flex;
+  flex-direction: column;
+}
+.account-detail {
+  font-size: 20px;
+  margin-bottom: 10px;
+}

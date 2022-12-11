@@ -1,8 +1,12 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import "./Account.css";
 
 const Account = () => {
   const navigate = useNavigate();
+  const goHome = () => {
+    navigate("/");
+  };
   useEffect(() => {
     if (localStorage.getItem("id") === null || undefined || "") {
       navigate("/sign");
@@ -14,12 +18,37 @@ const Account = () => {
 
   return (
     <>
-      <div>id : {localStorage.getItem("id")}</div>
-      <div>name : {localStorage.getItem("name")}</div>
-      <div>loginId : {localStorage.getItem("loginId")} </div>
-      <div>password : {localStorage.getItem("password")} </div>
-      <div>phoneNum : {localStorage.getItem("phoneNum")} </div>
-      <div>email : {localStorage.getItem("email")} </div>
+      <div className="account-form-wrapper">
+        <div className="account-form">
+          <div className="account-title">
+            <h1>Account</h1>
+          </div>
+          <div className="account-detail-form">
+            <span className="account-detail account-id">
+              id : {localStorage.getItem("id")}
+            </span>
+            <span className="account-detail account-name">
+              name : {localStorage.getItem("name")}
+            </span>
+            <span className="account-detail account-loginId">
+              loginId : {localStorage.getItem("loginId")}
+            </span>
+            <span className="account-detail account-password">
+              password : {localStorage.getItem("password")}
+            </span>
+            <span className="account-detail account-phoneNum">
+              phoneNum : {localStorage.getItem("phoneNum")}
+            </span>
+            <span className="account-detail account-email">
+              email : {localStorage.getItem("email")}
+            </span>
+          </div>
+          <div>
+            <button onClick={goHome}>홈으로</button>
+            <button>수정하기</button>
+          </div>
+        </div>
+      </div>
     </>
   );
 };
