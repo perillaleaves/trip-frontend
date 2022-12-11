@@ -10,7 +10,7 @@ const Account = () => {
     } else {
       console.log("id 를 불러옵니다.");
     }
-  }, []);
+  }, [navigate]);
 
   return (
     <>

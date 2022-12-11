@@ -1,9 +1,8 @@
 import { useRef, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import API from "../API/Api.js";
-import { getUserData } from "../module/reducer";
 
 const SignInStyle = styled.div`
   .login-wrapper {
@@ -74,11 +73,8 @@ const SignInStyle = styled.div`
 
 const SignIn = ({ onClickSignUp, onClickForgotPW }) => {
   //global state
-  const dispatch = useDispatch();
   const signInitialState = useSelector((state) => state.signReducer);
-  const userDataInitialState = useSelector(
-    (state) => state.userDataInitialState
-  );
+
   //local state
 
   const idInput = useRef();
@@ -90,10 +86,7 @@ const SignIn = ({ onClickSignUp, onClickForgotPW }) => {
   const navigate = useNavigate();
 
   //function
-  function getUser(userdata) {
-    console.log(userdata);
-    dispatch(getUserData(userdata));
-  }
+
   function onChange(e) {
     setInputValue({
       ...inputValue,

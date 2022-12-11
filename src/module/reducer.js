@@ -1,4 +1,7 @@
 // SIGN REDUCER
+
+import { createSlice } from "@reduxjs/toolkit";
+
 // initState
 const signInitialState = {
   pageIndex: 0,
@@ -147,6 +150,7 @@ export function postReducer(state = postInitialState, action) {
   }
 }
 // USER REDUCER
+
 // INIT
 const userDataInitialState = {
   id: "",
@@ -155,11 +159,12 @@ const userDataInitialState = {
   password: "",
   phoneNum: "",
   email: "",
-  isLogin: null,
+  isLogin: false,
 };
 
 //ACTION TYPE
 const MODE_GET_USER_DATA = "GETUSER";
+const MODE_CHANGE_LOGIN = "CHANGELOGIN";
 
 export const getUserData = (userData) => ({
   type: MODE_GET_USER_DATA,
@@ -170,8 +175,11 @@ export const getUserData = (userData) => ({
     password: userData.password,
     phoneNum: userData.phoneNum,
     email: userData.email,
-    isLogin: null,
   },
+});
+export const changeLogin = (isLogin) => ({
+  type: MODE_CHANGE_LOGIN,
+  isLogin: isLogin,
 });
 
 export function userReducer(state = userDataInitialState, action) {
@@ -184,7 +192,10 @@ export function userReducer(state = userDataInitialState, action) {
         password: action.userData.password,
         phoneNum: action.userData.phoneNum,
         email: action.userData.email,
-        isLogin: null,
+      };
+    case MODE_CHANGE_LOGIN:
+      return {
+        isLogin: action.isLogin,
       };
     default:
       return state;
