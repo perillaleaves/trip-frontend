@@ -16,10 +16,10 @@ const Account = () => {
     <>
       <div>id : {localStorage.getItem("id")}</div>
       <div>name : {localStorage.getItem("name")}</div>
-      <div>loginId :{localStorage.getItem("loginId")} </div>
-      <div>password :{localStorage.getItem("password")} </div>
-      <div>phoneNum :{localStorage.getItem("phoneNum")} </div>
-      <div>email :{localStorage.getItem("email")} </div>
+      <div>loginId : {localStorage.getItem("loginId")} </div>
+      <div>password : {localStorage.getItem("password")} </div>
+      <div>phoneNum : {localStorage.getItem("phoneNum")} </div>
+      <div>email : {localStorage.getItem("email")} </div>
     </>
   );
 };

@@ -1,10 +1,28 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Header.css";
 
 const Header = () => {
+  const [isLogined, setIsLogined] = useState(false);
+  useEffect(() => {
+    // 로그인이 안되어 있다면
+    if (localStorage.getItem("id") === null || undefined || "") {
+      setIsLogined(false);
+    } else {
+      setIsLogined(true);
+    }
+  }, [isLogined]);
   const navigate = useNavigate();
   const onAccountClick = () => {
     navigate("/account");
+  };
+  const onLogoutClick = () => {
+    localStorage.clear();
+    setIsLogined(false);
+    navigate("/");
+  };
+  const onLogin = () => {
+    navigate("/sign");
   };
   return (
     <>
@@ -19,7 +37,16 @@ const Header = () => {
           </div>
 
           <div className="myaccount">
-            <button onClick={onAccountClick}>내정보</button>
+            {isLogined ? (
+              <>
+                <button onClick={onAccountClick}>내정보</button>
+                <button onClick={onLogoutClick}>로그아웃</button>
+              </>
+            ) : (
+              <>
+                <button onClick={onLogin}>로그인</button>
+              </>
+            )}
           </div>
         </div>
       </div>
