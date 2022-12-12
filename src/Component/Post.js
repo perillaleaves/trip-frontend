@@ -14,7 +14,7 @@ const Post = ({
       <tr>
         <td onClick={() => onRowClick(postId)}>{postId}</td>
         <td onClick={() => onRowClick(postId)}>{postTitle}</td>
-        <td onClick={() => onRowClick(postId)}>{postAuthor}</td>
+        <td onClick={() => onRowClick(postId)}>작성장</td>
         <td onClick={() => onRowClick(postId)}>
           {new Date(postCreated_date).toLocaleString()}
         </td>

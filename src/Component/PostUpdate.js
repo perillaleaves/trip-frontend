@@ -10,12 +10,12 @@ const PostUpdate = () => {
   // local state
   const navigate = useNavigate();
   const [inputValue, setInputValue] = useState({
-    postId: selectRowData.postId,
+    postId: selectRowData.id,
     postTitle: selectRowData.postTitle,
     postContent: selectRowData.postContent,
     postCreated_date: new Date(),
   });
-  // local fucntion
+  // local function
   const resetForm = () => {
     setInputValue({
       postId: "",

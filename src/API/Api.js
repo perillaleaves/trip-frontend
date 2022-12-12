@@ -63,6 +63,19 @@ const API = {
     console.log("emailcheck", email);
     return data;
   },
+  getposts: async () => {
+    const data = await axios.get(`${API_base}/posts`);
+    return data;
+  },
+  creatpost: async (title, content) => {
+    const data = await axios.post(`${API_base}/post/create`, {
+      params: {
+        title: title,
+        content: content,
+      },
+    });
+    return data;
+  },
 };
 
 export default API;

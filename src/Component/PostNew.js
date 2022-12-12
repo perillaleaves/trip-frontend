@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./PostNew.css";
 import { postSave } from "../module/reducer";
@@ -6,12 +6,18 @@ import Navigator from "./Navigator";
 import Header from "./Header";
 import Footer from "./Footer";
 import { useNavigate } from "react-router-dom";
+import API from "../API/Api";
 const PostNew = () => {
   // global state
   const dispatch = useDispatch();
   const { selectRowData } = useSelector((state) => state.postReducer);
 
   // local state
+  useEffect(() => {
+    API.creatpost(inputValue.postTitle, inputValue.postContent).then((data) => {
+      console.log(data);
+    });
+  }, []);
   const navigate = useNavigate();
   const [inputValue, setInputValue] = useState({
     postId: "",

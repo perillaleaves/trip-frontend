@@ -1,13 +1,20 @@
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import API from "../API/Api";
 import Post from "./Post";
 import "./PostList.css";
 
 const PostList = ({ onRowClick, onRemove, onUpdate }) => {
   // global state
-  const { posts } = useSelector((state) => state.postReducer);
   const navigate = useNavigate();
-
+  const [posts, setPosts] = useState([]);
+  useEffect(() => {
+    API.getposts().then((data) => {
+      let resp = data.data.data.postDTOs;
+      setPosts(resp);
+    });
+  }, []);
   return (
     <div className="post-wrapper">
       <div className="post">
@@ -24,11 +31,11 @@ const PostList = ({ onRowClick, onRemove, onUpdate }) => {
             </tr>
             {posts.map((post) => (
               <Post
-                key={post.postId}
-                postId={post.postId}
-                postTitle={post.postTitle}
-                postAuthor={post.postAuthor}
-                postCreated_date={post.postCreated_date}
+                key={post.id}
+                postId={post.id}
+                postTitle={post.title}
+                postAuthor={post.content}
+                postCreated_date={post.createdAt}
                 onRowClick={onRowClick}
                 onRemove={onRemove}
                 onUpdate={onUpdate}
@@ -36,6 +43,7 @@ const PostList = ({ onRowClick, onRemove, onUpdate }) => {
             ))}
           </tbody>
         </table>
+        <div></div>
       </div>
     </div>
   );

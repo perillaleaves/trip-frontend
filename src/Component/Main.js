@@ -17,6 +17,7 @@ const Main = () => {
   const [inputData, setInputData] = useState();
 
   // User Function
+
   const onRemove = (postId) => dispatch(postRemove(postId));
   const onUpdate = (postId) => {
     dispatch(postUpdate(postId));
