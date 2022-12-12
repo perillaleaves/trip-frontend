@@ -67,12 +67,11 @@ const API = {
     const data = await axios.get(`${API_base}/posts`);
     return data;
   },
-  creatpost: async (title, content) => {
-    const data = await axios.post(`${API_base}/post/create`, {
-      params: {
-        title: title,
-        content: content,
-      },
+  creatpost: async (title, content, user_id) => {
+    const data = await axios.post(`${API_base}/post`, {
+      title: title,
+      content: content,
+      user: user_id,
     });
     return data;
   },

@@ -11,11 +11,19 @@ const PostNew = () => {
   // global state
   const dispatch = useDispatch();
   const { selectRowData } = useSelector((state) => state.postReducer);
-
+  let array = {
+    email: "1234@gmail.com",
+    id: "1",
+    loginId: "12345678",
+    name: "1",
+    password: "12345678A",
+    phoneNum: "123456",
+  };
   // local state
   useEffect(() => {
     API.creatpost(inputValue.postTitle, inputValue.postContent).then((data) => {
       console.log(data);
+      console.log(array);
     });
   }, []);
   const navigate = useNavigate();
@@ -43,7 +51,11 @@ const PostNew = () => {
 
   const onSave = (saveData) => {
     dispatch(postSave(saveData));
-    console.log(saveData);
+    API.creatpost(
+      inputValue.postTitle,
+      inputValue.postContent,
+      localStorage
+    ).then((data) => {});
   };
 
   const saveBtnClick = (e) => {

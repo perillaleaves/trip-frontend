@@ -260,7 +260,7 @@ const SignUp = ({ onClickSignIn }) => {
 
   const onClickIdCheck = () => {
     API.idoverlap(idInput.current.value).then((data) => {
-      if (data.data.validate.code === "available") {
+      if (data.data.validate.code === "availableId") {
         setIdValid(true);
         setExistId(false);
       } else {
@@ -271,7 +271,9 @@ const SignUp = ({ onClickSignIn }) => {
   };
   const onClickPhoneNumCheck = () => {
     API.phoneNumoverlap(phoneNumInput.current.value).then((data) => {
-      if (data.data.validate.code === "available") {
+      console.log(data);
+
+      if (data.data.validate.code === "availablePhoneNum") {
         setPhoneNumValid(true);
         setExistPhoneNum(false);
       } else {
@@ -282,7 +284,7 @@ const SignUp = ({ onClickSignIn }) => {
   };
   const onClickEmailCheck = () => {
     API.emailoverlap(emailInput.current.value).then((data) => {
-      if (data.data.validate.code === "available") {
+      if (data.data.validate.code === "availableEmail") {
         setEmailValid(true);
         setExistEmail(false);
       } else {
