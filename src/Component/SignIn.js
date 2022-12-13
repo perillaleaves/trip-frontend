@@ -105,7 +105,7 @@ const SignIn = ({ onClickSignUp, onClickForgotPW }) => {
           // local storage 값 저장 ----> token 이 있으면 token을 서버에 요청해 내정보에 값을 받아올 수 있지만, token으로 하지 않으므로 모든 데이터 저장합니다.
           let userData = data.data.data;
           localStorage.clear();
-          localStorage.setItem("id", userData.id);
+          localStorage.setItem("user_id", userData.id);
           localStorage.setItem("name", userData.name);
           localStorage.setItem("loginId", userData.loginId);
           localStorage.setItem("password", userData.password);

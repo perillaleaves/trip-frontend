@@ -9,7 +9,7 @@ const Header = () => {
   let isLogin = useSelector((state) => state.userReducer.isLogin);
   useEffect(() => {
     // 로그인이 안되어 있다면
-    if (localStorage.getItem("id") === null || undefined || "") {
+    if (localStorage.getItem("user_id") === null || undefined || "") {
       console.log("로그인 안됨");
       dispatch(changeLogin(false));
     } else {

@@ -1,7 +1,4 @@
 // SIGN REDUCER
-
-import { createSlice } from "@reduxjs/toolkit";
-
 // initState
 const signInitialState = {
   pageIndex: 0,
@@ -150,8 +147,8 @@ export function postReducer(state = postInitialState, action) {
       return state;
   }
 }
-// USER REDUCER
 
+// USER REDUCER
 // INIT
 const userDataInitialState = {
   id: "",

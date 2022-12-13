@@ -11,7 +11,7 @@ const PostList = ({ onRowClick, onRemove, onUpdate }) => {
   const [posts, setPosts] = useState([]);
   useEffect(() => {
     API.getposts().then((data) => {
-      let resp = data.data.data.postDTOs;
+      let resp = data.data.data;
       setPosts(resp);
     });
   }, []);

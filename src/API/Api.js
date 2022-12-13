@@ -1,7 +1,9 @@
 import axios from "axios";
 
 const API_base = "http://192.168.35.126:8080";
+
 const API = {
+  // 로그인 검사
   signin: async (loginId, password) => {
     const data = await axios.post(
       `${API_base}/login`,
@@ -17,6 +19,8 @@ const API = {
       console.log("error", data.status);
     }
   },
+
+  // 회원가입 검사
   signup: async (name, loginId, password, phoneNum, email) => {
     console.log("hihi signup call!", loginId, password, name, phoneNum, email);
     const data = await axios.post(`${API_base}/signup`, {
@@ -33,8 +37,9 @@ const API = {
       console.log("error", data?.status);
     }
   },
+
+  // ID 중복검사
   idoverlap: async (loginId) => {
-    // ID 중복검사 API CALL
     const data = await axios.get(`${API_base}/overlap/loginid`, {
       params: {
         loginId: loginId,
@@ -43,8 +48,9 @@ const API = {
     console.log("idcheck", loginId);
     return data;
   },
+
+  // ID 중복검사
   phoneNumoverlap: async (phoneNum) => {
-    // ID 중복검사 API CALL
     const data = await axios.get(`${API_base}/overlap/phonenumber`, {
       params: {
         phoneNum: phoneNum,
@@ -53,8 +59,9 @@ const API = {
     console.log("PNcheck", phoneNum);
     return data;
   },
+
+  // ID 중복검사
   emailoverlap: async (email) => {
-    // ID 중복검사 API CALL
     const data = await axios.get(`${API_base}/overlap/email`, {
       params: {
         email: email,
@@ -63,16 +70,25 @@ const API = {
     console.log("emailcheck", email);
     return data;
   },
+
+  // 게시글 조회
   getposts: async () => {
     const data = await axios.get(`${API_base}/posts`);
     return data;
   },
+  getpost: async (postId) => {
+    const data = await axios.get(`${API_base}/post/1`);
+    return data;
+  },
+
+  //게시글 생성
   creatpost: async (title, content, user_id) => {
     const data = await axios.post(`${API_base}/post`, {
       title: title,
       content: content,
       user: user_id,
     });
+    console.log(data);
     return data;
   },
 };
