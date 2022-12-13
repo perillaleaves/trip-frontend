@@ -99,13 +99,15 @@ const SignIn = ({ onClickSignUp, onClickForgotPW }) => {
       if (data.status === 200) {
         console.log(data.data);
         if (data.data.error === null) {
+          console.log(data.data.data);
           // 로그인 성공시 로그인 정보 갖고있기
           // console.log("userData", getUser(data.data.data.user));
           // getUser(data.data.data.user);
           // local storage 값 저장 ----> token 이 있으면 token을 서버에 요청해 내정보에 값을 받아올 수 있지만, token으로 하지 않으므로 모든 데이터 저장합니다.
           let userData = data.data.data;
+          console.log(userData);
           localStorage.clear();
-          localStorage.setItem("user_id", userData.id);
+          localStorage.setItem("id", userData.id);
           localStorage.setItem("name", userData.name);
           localStorage.setItem("loginId", userData.loginId);
           localStorage.setItem("password", userData.password);

@@ -8,7 +8,7 @@ const Account = () => {
     navigate("/");
   };
   useEffect(() => {
-    if (localStorage.getItem("user_id") === null || undefined || "") {
+    if (localStorage.getItem("id") === null || undefined || "") {
       navigate("/sign");
       console.log("로그인이 필요합니다");
     } else {

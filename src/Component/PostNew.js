@@ -44,7 +44,7 @@ const PostNew = () => {
     e.preventDefault();
     onSave(inputValue);
     resetForm();
-    navigate("/");
+    // navigate("/");
   };
 
   return (

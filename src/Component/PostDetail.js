@@ -34,6 +34,7 @@ const PostDetail = () => {
     },
     comments: [],
   });
+  // 수정하기 or 삭제하기 -> 유저 id가 post를 게시했는지 서버에서 확인 후 isAdmin?=true로 반환해서 데이터로 넘겨주길 바람
   return (
     <>
       <Header />
@@ -47,7 +48,10 @@ const PostDetail = () => {
               작성일 : {new Date(userDetail.createdAt).toLocaleString()}
             </div>
             <div>내용 : {userDetail.content}</div>
-            <span>{}</span>
+            <span>
+              <button>수정하기</button>
+              <button>삭제하기</button>
+            </span>
           </div>
         </div>
       </div>

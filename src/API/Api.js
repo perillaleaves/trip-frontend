@@ -71,11 +71,12 @@ const API = {
     return data;
   },
 
-  // 게시글 조회
+  // 게시글 리스트 조회
   getposts: async () => {
     const data = await axios.get(`${API_base}/posts`);
     return data;
   },
+  // 게시글 상세 조회
   getpost: async (postId) => {
     const data = await axios.get(`${API_base}/post/1`);
     return data;
@@ -83,14 +84,25 @@ const API = {
 
   //게시글 생성
   creatpost: async (title, content, user_id) => {
+    console.log(user_id);
     const data = await axios.post(`${API_base}/post`, {
       title: title,
       content: content,
       user: user_id,
     });
-    console.log(data);
     return data;
   },
+  updatepost: async (postId, title, content, user_id) => {
+    const data = await axios.put(`${API_base}/post/${postId}`, {
+      postId: postId,
+      title: title,
+      content: content,
+      user: user_id,
+    });
+    return data;
+  },
+
+  // 게시글 수정
 };
 
 export default API;
