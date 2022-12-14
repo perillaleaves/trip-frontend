@@ -8,13 +8,29 @@ const PostList = ({ onRowClick }) => {
   // global state
   const navigate = useNavigate();
   const [posts, setPosts] = useState([]);
+  const [page, setPage] = useState({
+    firstPage: 1,
+    currentPage: 1,
+    lastPage: 1,
+  });
   useEffect(() => {
     API.getposts().then((data) => {
       let resp = data.data.data;
       setPosts(resp);
       console.log(data);
+      setPage({
+        lastPage: data.data.lastPage,
+      });
     });
   }, []);
+
+  // function
+  const pageRendering = () => {
+    for (let i = 0; i < page.lastPage; i++) {
+      return console.log(i);
+    }
+  };
+  const onPageClick = () => {};
   return (
     <div className="post-wrapper">
       <div className="post">
@@ -23,10 +39,10 @@ const PostList = ({ onRowClick }) => {
         <table border={1} className="post-table">
           <tbody>
             <tr>
-              <td>id</td>
-              <td>title</td>
-              <td>author</td>
-              <td>time</td>
+              <td className="post-table-id">id</td>
+              <td className="post-table-title">title</td>
+              <td className="post-table-author">author</td>
+              <td className="post-table-time">time</td>
             </tr>
             {posts.map((post) => (
               <Post
@@ -39,6 +55,9 @@ const PostList = ({ onRowClick }) => {
             ))}
           </tbody>
         </table>
+        <div className="page-number-form-wrapper">
+          <span className="page-number-form">{pageRendering()}</span>
+        </div>
       </div>
     </div>
   );

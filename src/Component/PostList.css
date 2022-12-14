@@ -11,3 +11,33 @@
 .post-table {
   width: 600px;
 }
+.post-table-id {
+  width: 30px;
+}
+.post-table-title {
+  width: 300px;
+}
+.post-table-author {
+  width: 70px;
+}
+.post-table-time {
+  width: 100px;
+}
+/* paging */
+.page-number-form-wrapper {
+  margin-top: 20px;
+}
+.page-number-form {
+  display: flex;
+  justify-content: center;
+}
+.page-number-item {
+  text-align: center;
+  background-color: black;
+  border: 1px solid #fff;
+  color: #fff;
+  display: inline-block;
+  font-size: 15px;
+  line-height: 20px;
+  min-width: 18px;
+}

@@ -1,14 +1,12 @@
 import { useEffect, useState } from "react";
 import API from "../API/Api";
 import CommentList from "./CommentList";
-import { useDispatch } from "react-redux";
 import "./PostDetail.css";
 import { useNavigate, useParams } from "react-router-dom";
 
 const PostDetail = () => {
   // hook
   const { postId } = useParams();
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
     API.getpost(postId).then((data) => {
