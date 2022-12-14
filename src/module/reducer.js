@@ -35,118 +35,118 @@ export function signReducer(state = signInitialState, action) {
   }
 }
 
-// POST REDUCER
-// initState
-const postInitialState = {
-  posts: [
-    {
-      postId: 1,
-      postAuthor: "이지윤",
-      postTitle: "제목1",
-      postContent: "hello 1",
-      postCreated_date: new Date().getTime(),
-    },
-    {
-      postId: 2,
-      postAuthor: "이지윤",
-      postTitle: "제목2",
-      postContent: "hello 2",
-      postCreated_date: new Date().getTime(),
-    },
-    {
-      postId: 3,
-      postAuthor: "이지윤",
-      postTitle: "제목3",
-      postContent: "hello 3",
-      postCreated_date: new Date().getTime(),
-    },
-    {
-      postId: 4,
-      postAuthor: "이지윤",
-      postTitle: "제목4",
-      postContent: "hello 4",
-      postCreated_date: new Date().getTime(),
-    },
-  ],
-  lastId: 4,
-  selectRowData: {},
-};
-// Action Type
-const MODE_REMOVE = "REMOVE";
-const MODE_SAVE = "SAVE";
-const MODE_SELECT_ROW = "SELECT_ROW";
-const MODE_UPDATE = "UPDATE";
+// // POST REDUCER
+// // initState
+// const postInitialState = {
+//   posts: [
+//     {
+//       postId: 1,
+//       postAuthor: "이지윤",
+//       postTitle: "제목1",
+//       postContent: "hello 1",
+//       postCreated_date: new Date().getTime(),
+//     },
+//     {
+//       postId: 2,
+//       postAuthor: "이지윤",
+//       postTitle: "제목2",
+//       postContent: "hello 2",
+//       postCreated_date: new Date().getTime(),
+//     },
+//     {
+//       postId: 3,
+//       postAuthor: "이지윤",
+//       postTitle: "제목3",
+//       postContent: "hello 3",
+//       postCreated_date: new Date().getTime(),
+//     },
+//     {
+//       postId: 4,
+//       postAuthor: "이지윤",
+//       postTitle: "제목4",
+//       postContent: "hello 4",
+//       postCreated_date: new Date().getTime(),
+//     },
+//   ],
+//   lastId: 4,
+//   selectRowData: {},
+// };
+// // Action Type
+// const MODE_REMOVE = "REMOVE";
+// const MODE_SAVE = "SAVE";
+// const MODE_SELECT_ROW = "SELECT_ROW";
+// const MODE_UPDATE = "UPDATE";
 
-// Action Create Function
-export const postSave = (saveData) => ({
-  type: MODE_SAVE,
-  saveData: {
-    postId: saveData.postId,
-    postAuthor: localStorage.name,
-    postTitle: saveData.postTitle,
-    postContent: saveData.postContent,
-    postCreated_date: saveData.postCreated_date,
-  },
-});
-export const postRemove = (postId) => ({
-  type: MODE_REMOVE,
-  postId: postId,
-});
-export const postSelectRow = (postId) => ({
-  type: MODE_SELECT_ROW,
-  postId: postId,
-});
-export const postUpdate = (postId) => ({
-  type: MODE_UPDATE,
-  postId: postId,
-});
+// // Action Create Function
+// export const postSave = (saveData) => ({
+//   type: MODE_SAVE,
+//   saveData: {
+//     postId: saveData.postId,
+//     postAuthor: localStorage.name,
+//     postTitle: saveData.postTitle,
+//     postContent: saveData.postContent,
+//     postCreated_date: saveData.postCreated_date,
+//   },
+// });
+// export const postRemove = (postId) => ({
+//   type: MODE_REMOVE,
+//   postId: postId,
+// });
+// export const postSelectRow = (postId) => ({
+//   type: MODE_SELECT_ROW,
+//   postId: postId,
+// });
+// export const postUpdate = (postId) => ({
+//   type: MODE_UPDATE,
+//   postId: postId,
+// });
 
-// Reducer
-export function postReducer(state = postInitialState, action) {
-  switch (action.type) {
-    case MODE_REMOVE:
-      return {
-        ...state,
-        posts: state.posts.filter((row) => row.postId !== action.postId),
-      };
-    case MODE_SAVE:
-      if (action.saveData.postId === "") {
-        // postId 가 없다면 신규 데이터 저장
-        return {
-          lastId: state.lastId + 1,
-          posts: state.posts.concat({
-            ...action.saveData,
-            postId: state.lastId + 1,
-          }),
-          selectRowData: {},
-        };
-      } else {
-        // postId 가 있다면 기존 데이터 수정
-        console.log("수정이군요");
-        return {
-          ...state,
-          posts: state.posts.map((data) =>
-            data.postId === action.saveData.postId
-              ? { ...action.saveData }
-              : data
-          ),
-        };
-      }
-    case MODE_SELECT_ROW:
-      // debugger;
-      return {
-        // 클릭한 셀의 postId 를 가진 state 만 찾아서 return
-        selectRowData: action.postId,
-      };
-    case MODE_UPDATE:
-      return {
-        ...state,
-        selectRowData: state.posts.find((row) => row.postId === action.postId),
-      };
-    default:
-      return state;
-  }
-}
+// // Reducer
+// export function postReducer(state = postInitialState, action) {
+//   switch (action.type) {
+//     case MODE_REMOVE:
+//       return {
+//         ...state,
+//         posts: state.posts.filter((row) => row.postId !== action.postId),
+//       };
+//     case MODE_SAVE:
+//       if (action.saveData.postId === "") {
+//         // postId 가 없다면 신규 데이터 저장
+//         return {
+//           lastId: state.lastId + 1,
+//           posts: state.posts.concat({
+//             ...action.saveData,
+//             postId: state.lastId + 1,
+//           }),
+//           selectRowData: {},
+//         };
+//       } else {
+//         // postId 가 있다면 기존 데이터 수정
+//         console.log("수정이군요");
+//         return {
+//           ...state,
+//           posts: state.posts.map((data) =>
+//             data.postId === action.saveData.postId
+//               ? { ...action.saveData }
+//               : data
+//           ),
+//         };
+//       }
+//     case MODE_SELECT_ROW:
+//       // debugger;
+//       return {
+//         // 클릭한 셀의 postId 를 가진 state 만 찾아서 return
+//         selectRowData: action.postId,
+//       };
+//     case MODE_UPDATE:
+//       return {
+//         ...state,
+//         selectRowData: state.posts.find((row) => row.postId === action.postId),
+//       };
+//     default:
+//       return state;
+//   }
+// }
 
 // USER REDUCER
 // INIT

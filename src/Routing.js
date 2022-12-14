@@ -20,10 +20,10 @@ const Routing = () => {
         <Route exact path="/*" element={<App />} />
         <Route exact path="/sign" element={<Sign />} />
         <Route exact path="/account" element={<Account />} />
-        <Route exact path="/postnew" element={<PostNew />} />
-        <Route exact path="/:data" element={<PostDetail />} />
-        <Route exact path="/postupdate/:data" element={<PostUpdate />} />
-        <Route exact path="/postlist" element={<PostList />} />
+        <Route exact path="/posts/create" element={<PostNew />} />
+        <Route exact path="/posts/:postId" element={<PostDetail />} />
+        <Route exact path="/posts/:postId/update" element={<PostUpdate />} />
+        <Route exact path="/posts" element={<PostList />} />
       </Routes>
     </Provider>
   );

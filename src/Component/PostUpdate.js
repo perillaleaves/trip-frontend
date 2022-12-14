@@ -1,44 +1,74 @@
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import API from "../API/Api";
 import "../App.css";
-import { postSave } from "../module/reducer";
 const PostUpdate = () => {
-  // global state
-  const dispatch = useDispatch();
-  const { selectRowData } = useSelector((state) => state.postReducer);
-  // local state
+  // hook
+  const { postId } = useParams();
   const navigate = useNavigate();
-  const [inputValue, setInputValue] = useState({
-    postId: selectRowData.id,
-    postTitle: selectRowData.postTitle,
-    postContent: selectRowData.postContent,
-    postCreated_date: new Date(),
+  useEffect(() => {
+    API.getpost(postId).then((data) => {
+      setPostInput({
+        postId: postId,
+        title: data.data.data.title,
+        content: data.data.data.content,
+        createdAt: data.data.data.createdAt,
+        updatedAt: new Date(),
+        userDTO: data.data.data.userDTO,
+        comments: data.data.data.comments,
+      });
+    });
+  }, []);
+
+  // local state
+  const [postInput, setPostInput] = useState({
+    postId: postId,
+    title: "",
+    content: "",
+    createdAt: "",
+    updatedAt: new Date(),
+    userDTO: {
+      name: "",
+      userId: "",
+    },
+    comments: [],
   });
+
   // local function
   const resetForm = () => {
-    setInputValue({
+    setPostInput({
       postId: "",
-      postTitle: "",
-      postContent: "",
+      title: "",
+      content: "",
+      createdAt: "",
+      updatedAt: "",
+      userDTO: {
+        name: "",
+        userId: "",
+      },
+      comments: [],
     });
   };
 
   const onChange = (e) => {
-    setInputValue({
-      ...inputValue,
+    setPostInput({
+      ...postInput,
       [e.target.name]: e.target.value,
     });
   };
 
-  const onSave = (saveData) => {
-    dispatch(postSave(saveData));
-    console.log(saveData);
+  const onSave = () => {
+    API.updatepost(
+      postInput.postId,
+      postInput.title,
+      postInput.content,
+      postInput.userDTO.name
+    );
   };
 
   const saveBtnClick = (e) => {
     e.preventDefault();
-    onSave(inputValue);
+    onSave();
     resetForm();
     navigate("/");
   };
@@ -51,18 +81,18 @@ const PostUpdate = () => {
             <span>제목 :</span>
             <input
               className="post-editor-title-input"
-              name="postTitle"
+              name="title"
               onChange={onChange}
-              value={inputValue.postTitle}
+              value={postInput.title}
             />
           </div>
           <div>
             <span>본문 :</span>
             <input
               className="post-editor-content-input"
-              name="postContent"
+              name="content"
               onChange={onChange}
-              value={inputValue.postContent}
+              value={postInput.content}
             ></input>
           </div>
           <button onClick={saveBtnClick}>저장</button>

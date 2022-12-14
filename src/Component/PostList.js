@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import API from "../API/Api";
 import Post from "./Post";
 import "./PostList.css";
 
-const PostList = ({ onRowClick, onRemove, onUpdate }) => {
+const PostList = ({ onRowClick }) => {
   // global state
   const navigate = useNavigate();
   const [posts, setPosts] = useState([]);
@@ -13,13 +12,13 @@ const PostList = ({ onRowClick, onRemove, onUpdate }) => {
     API.getposts().then((data) => {
       let resp = data.data.data;
       setPosts(resp);
-      console.log(resp);
+      console.log(data);
     });
   }, []);
   return (
     <div className="post-wrapper">
       <div className="post">
-        <button onClick={() => navigate("/postnew")}>새 글 쓰기</button>
+        <button onClick={() => navigate("/posts/create")}>새 글 쓰기</button>
 
         <table border={1} className="post-table">
           <tbody>
@@ -28,23 +27,18 @@ const PostList = ({ onRowClick, onRemove, onUpdate }) => {
               <td>title</td>
               <td>author</td>
               <td>time</td>
-              <td>수정, 삭제</td>
             </tr>
             {posts.map((post) => (
               <Post
                 key={post.id}
                 postId={post.id}
                 postTitle={post.title}
-                postAuthor={post.content}
                 postCreated_date={post.createdAt}
                 onRowClick={onRowClick}
-                onRemove={onRemove}
-                onUpdate={onUpdate}
               />
             ))}
           </tbody>
         </table>
-        <div></div>
       </div>
     </div>
   );

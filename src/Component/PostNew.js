@@ -1,50 +1,60 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import "./PostNew.css";
-import { postSave } from "../module/reducer";
 import Navigator from "./Navigator";
 import Header from "./Header";
 import Footer from "./Footer";
 import { useNavigate } from "react-router-dom";
 import API from "../API/Api";
 const PostNew = () => {
-  // global state
-  const dispatch = useDispatch();
+  // hook
+  const navigate = useNavigate();
 
   // local state
-  const navigate = useNavigate();
-  const [inputValue, setInputValue] = useState({
+  const [postInput, setPostInput] = useState({
     postId: "",
-    postTitle: "",
-    postContent: "",
-    postCreated_date: new Date(),
+    title: "",
+    content: "",
+    createdAt: "",
+    updatedAt: new Date(),
+    userDTO: {
+      name: "",
+      userId: "",
+    },
+    comments: [],
   });
 
   //local function
   const resetForm = () => {
-    setInputValue({
+    setPostInput({
       postId: "",
-      postTitle: "",
-      postContent: "",
+      title: "",
+      content: "",
+      createdAt: "",
+      updatedAt: "",
+      userDTO: {
+        name: "",
+        userId: "",
+      },
+      comments: [],
     });
   };
+
   const onChange = (e) => {
-    setInputValue({
-      ...inputValue,
+    setPostInput({
+      ...postInput,
       [e.target.name]: e.target.value,
     });
   };
 
-  const onSave = (saveData) => {
-    dispatch(postSave(saveData));
-    API.creatpost(inputValue.postTitle, inputValue.postContent, localStorage);
+  const onSave = () => {
+    API.creatpost(postInput.title, postInput.content, localStorage);
   };
 
   const saveBtnClick = (e) => {
     e.preventDefault();
-    onSave(inputValue);
+    onSave();
     resetForm();
-    // navigate("/");
+    navigate("/");
   };
 
   return (
@@ -60,18 +70,18 @@ const PostNew = () => {
                 <span>제목 :</span>
                 <input
                   className="post-new-title-input"
-                  name="postTitle"
+                  name="title"
                   onChange={onChange}
-                  value={inputValue.postTitle}
+                  value={postInput.title}
                 />
               </div>
               <div>
                 <span>본문 :</span>
                 <input
                   className="post-new-content-input"
-                  name="postContent"
+                  name="content"
                   onChange={onChange}
-                  value={inputValue.postContent}
+                  value={postInput.content}
                 ></input>
               </div>
               <button onClick={saveBtnClick}>저장</button>
