@@ -10,6 +10,7 @@ import "./PostDetail.css";
 const PostDetail = () => {
   // global state
   const { selectRowData } = useSelector((state) => state.postReducer);
+  console.log(selectRowData);
   // local state
   useEffect(() => {
     API.getpost(userDetail.postId).then((data) => {
@@ -22,9 +23,10 @@ const PostDetail = () => {
         comments: data.data.data.comments,
       });
     });
+    console.log(userDetail.postId);
   }, []);
   const [userDetail, setUserDetail] = useState({
-    postId: selectRowData.postId,
+    postId: selectRowData,
     title: "",
     content: "",
     createdAt: "",
@@ -34,6 +36,9 @@ const PostDetail = () => {
     },
     comments: [],
   });
+
+  //local function
+
   // 수정하기 or 삭제하기 -> 유저 id가 post를 게시했는지 서버에서 확인 후 isAdmin?=true로 반환해서 데이터로 넘겨주길 바람
   return (
     <>

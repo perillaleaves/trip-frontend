@@ -133,10 +133,10 @@ export function postReducer(state = postInitialState, action) {
         };
       }
     case MODE_SELECT_ROW:
+      // debugger;
       return {
         // 클릭한 셀의 postId 를 가진 state 만 찾아서 return
-        ...state,
-        selectRowData: state.posts.find((row) => row.postId === action.postId),
+        selectRowData: action.postId,
       };
     case MODE_UPDATE:
       return {

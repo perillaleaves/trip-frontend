@@ -12,7 +12,7 @@ const Post = ({
   return (
     <>
       <tr>
-        <td onClick={() => onRowClick(postId)}>{postId}</td>
+        <td onClick={() => console.log(postId)}>{postId}</td>
         <td onClick={() => onRowClick(postId)}>{postTitle}</td>
         <td onClick={() => onRowClick(postId)}>작성장</td>
         <td onClick={() => onRowClick(postId)}>

@@ -13,6 +13,7 @@ const PostList = ({ onRowClick, onRemove, onUpdate }) => {
     API.getposts().then((data) => {
       let resp = data.data.data;
       setPosts(resp);
+      console.log(resp);
     });
   }, []);
   return (

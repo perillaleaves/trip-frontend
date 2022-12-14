@@ -78,7 +78,7 @@ const API = {
   },
   // 게시글 상세 조회
   getpost: async (postId) => {
-    const data = await axios.get(`${API_base}/post/1`);
+    const data = await axios.get(`${API_base}/post/${postId}`);
     return data;
   },
 

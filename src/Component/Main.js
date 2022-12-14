@@ -7,6 +7,7 @@ import { postRemove, postSelectRow, postUpdate } from "../module/reducer";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PostNew from "./PostNew";
+import API from "../API/Api";
 
 const Main = () => {
   // global state
@@ -31,12 +32,6 @@ const Main = () => {
   };
   const onRowClick = (postId) => {
     dispatch(postSelectRow(postId));
-    setInputData({
-      postId: selectRowData.postId,
-      postTitle: selectRowData.postTitle,
-      postContent: selectRowData.postContent,
-      postAuthor: selectRowData.postAuthor,
-    });
     navigate(`/${postId}`);
   };
 
