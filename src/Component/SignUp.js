@@ -216,33 +216,23 @@ const SignUp = ({ onClickSignIn }) => {
   };
 
   const handleSubmit = () => {
-    if (
-      nameValid &&
-      idValid &&
-      passwordValid &&
-      phoneNumValid &&
-      emailValid === true
-    ) {
-      API.signup(
-        inputValue.name,
-        inputValue.loginId,
-        inputValue.password,
-        inputValue.phoneNum,
-        inputValue.email
-      ).then((data) => {
-        if (data.status === 200) {
-          console.log(data.data);
-          if (data.data?.success?.code === "signup") {
-            // success
-            alert("회원가입 성공 !");
-          }
-        } else {
-          console.log("서버 통신 실패");
+    API.signup(
+      inputValue.name,
+      inputValue.loginId,
+      inputValue.password,
+      inputValue.phoneNum,
+      inputValue.email
+    ).then((data) => {
+      if (data.status === 200) {
+        console.log(data.data);
+        if (data.data?.success?.code === "signup") {
+          // success
+          alert("회원가입 성공 !");
         }
-      });
-    } else {
-      alert("회원가입 인풋 에러");
-    }
+      } else {
+        console.log("서버 통신 실패");
+      }
+    });
   };
 
   const onChangeName = (e) => {

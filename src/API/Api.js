@@ -36,6 +36,7 @@ const API = {
     } else {
       console.log("error", data?.status);
     }
+    console.log(data);
   },
 
   // ID 중복검사
