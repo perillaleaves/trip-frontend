@@ -1,0 +1,6 @@
+.navigator-wrapper {
+  background-color: rgba(27, 50, 102, 1);
+  position: fixed;
+  height: 100%;
+  width: 60px;
+}

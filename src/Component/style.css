@@ -1,0 +1,36 @@
+.post {
+  cursor: pointer;
+}
+
+.comment-list-form-wrapper {
+  background-color: brown;
+  width: 100%;
+  min-height: 400px;
+  padding-left: 90px;
+}
+
+.comment-list-form {
+  margin-right: 150px;
+  margin-bottom: 50px;
+}
+
+.comment-form-wrapper {
+  border: 1px solid #000;
+  margin-bottom: 20px;
+}
+.comment-flex {
+  display: flex;
+}
+.comment-id {
+  margin-right: 10px;
+}
+.comment-title :nth-child(1) {
+  font-size: large;
+}
+.comment-title :nth-child(2) {
+  font-size: small;
+}
+.comment-content-wrapper {
+  margin-top: 20px;
+  border: 1px solid #000;
+}

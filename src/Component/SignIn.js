@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -73,9 +73,12 @@ const SignInStyle = styled.div`
 
 const SignIn = ({ onClickSignUp, onClickForgotPW }) => {
   //global state
-  const pageIndex = useSelector((state) => state.pageIndex);
+  const signInitialState = useSelector((state) => state.signReducer);
 
   //local state
+
+  const idInput = useRef();
+  const passwordInput = useRef();
   const [inputValue, setInputValue] = useState({
     loginId: "",
     password: "",
@@ -83,20 +86,43 @@ const SignIn = ({ onClickSignUp, onClickForgotPW }) => {
   const navigate = useNavigate();
 
   //function
+
   function onChange(e) {
     setInputValue({
       ...inputValue,
       [e.target.name]: e.target.value,
     });
   }
+
   function onClickSignIn() {
     API.signin(inputValue.loginId, inputValue.password).then((data) => {
       if (data.status === 200) {
-        if (data.data.result === "login") {
-          navigate("./login");
+        console.log(data.data);
+        if (data.data.error === null) {
+          console.log(data.data.data);
+          // 로그인 성공시 로그인 정보 갖고있기
+          // console.log("userData", getUser(data.data.data.user));
+          // getUser(data.data.data.user);
+          // local storage 값 저장 ----> token 이 있으면 token을 서버에 요청해 내정보에 값을 받아올 수 있지만, token으로 하지 않으므로 모든 데이터 저장합니다.
+          let userData = data.data.data;
+          console.log(userData);
+          localStorage.clear();
+          localStorage.setItem("id", userData.id);
+          localStorage.setItem("name", userData.name);
+          localStorage.setItem("loginId", userData.loginId);
+          localStorage.setItem("password", userData.password);
+          localStorage.setItem("phoneNum", userData.phoneNum);
+          localStorage.setItem("email", userData.email);
+          navigate("/");
         } else {
-          // 로그인 실패시 아이디 or 비밀번호 어떤게 틀렸는지 focus
-          alert("로그인 실패");
+          if (data.data.error?.success === "EmptyLoginId") {
+            idInput.current.focus();
+            alert(data.data.error.message);
+          }
+          if (data.data.error?.success === "InconsistencyPassword") {
+            passwordInput.current.focus();
+            alert(data.data.error.message);
+          }
         }
         setInputValue({ loginId: "", password: "" });
         console.log("서버 통신 성공");
@@ -112,7 +138,9 @@ const SignIn = ({ onClickSignUp, onClickForgotPW }) => {
         <div className="login-wrapper">
           <div
             className="login-body"
-            style={{ transform: `translateX(${-pageIndex * 100}vw)` }}
+            style={{
+              transform: `translateX(${-signInitialState.pageIndex * 100}vw)`,
+            }}
           >
             <div className="login-form">
               <div className="login-form-main">
@@ -123,6 +151,7 @@ const SignIn = ({ onClickSignUp, onClickForgotPW }) => {
                     placeholder="ID"
                     name="loginId"
                     value={inputValue.loginId}
+                    ref={idInput}
                     onChange={onChange}
                   />
                 </div>
@@ -132,6 +161,8 @@ const SignIn = ({ onClickSignUp, onClickForgotPW }) => {
                     placeholder="PASSWORD"
                     value={inputValue.password}
                     name="password"
+                    ref={passwordInput}
+                    type="password"
                     onChange={onChange}
                   />
                 </div>

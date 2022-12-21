@@ -11,5 +11,40 @@ html {
     rgba(27, 69, 102, 1) 100%
   );
   margin: 0;
+  /* overflow: hidden; */
+}
+#root {
+  height: 100vw;
+}
+.post-editor-wrapper {
   overflow: hidden;
+  background-color: #fff;
+  text-align: left;
+  width: 400px;
+  height: 520px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 15px rgba(217, 217, 217, 0.451);
+}
+.post-editor {
+  margin: 5%;
+}
+.post-editor-title-input {
+  width: 300px;
+}
+.post-editor-content-input {
+  width: 300px;
+  height: 400px;
+}
+.main-background {
+  background-color: rgb(249, 246, 247);
+  height: 100%;
+}
+.main-gap {
+  background-color: rgb(239, 229, 230);
+  height: 150px;
+}
+.main {
+  margin: 30px;
+  margin-left: 90px;
+  border: 1px solid #000;
 }

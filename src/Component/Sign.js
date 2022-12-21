@@ -1,7 +1,7 @@
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import styled from "styled-components";
-
+import { signUp, signIn, forgotPW } from "../module/reducer";
 import { useDispatch, useSelector } from "react-redux";
 const SignStyle = styled.div`
   .current-page-wrapper {
@@ -49,23 +49,24 @@ const SignStyle = styled.div`
   }
 `;
 const Sign = () => {
-  const pageIndex = useSelector((state) => state.pageIndex);
+  const signInitialState = useSelector((state) => state.signReducer);
   const dispatch = useDispatch();
 
   //global function
+
   function onClickSignUp() {
-    dispatch({ type: "SIGNUP" });
+    dispatch(signUp(signInitialState));
   }
   function onClickSignIn() {
-    dispatch({ type: "SIGNIN" });
+    dispatch(signIn(signInitialState));
   }
   function onClickForgotPW() {
-    dispatch({ type: "FORGOTPW" });
+    dispatch(forgotPW(signInitialState));
   }
   return (
     <SignStyle>
       <div className="sign">
-        <SignUp />
+        <SignUp onClickSignIn={onClickSignIn} />
         <SignIn
           onClickSignUp={onClickSignUp}
           onClickForgotPW={onClickForgotPW}
@@ -73,7 +74,12 @@ const Sign = () => {
       </div>
       <div className="current-page-wrapper">
         <div className="current-page">
-          <span style={{ transform: `translateX(${pageIndex * 19}px)` }}></span>
+          <span
+            style={{
+              transform: `translateX(${signInitialState.pageIndex * 19}px)`,
+            }}
+          ></span>
+          {/* {console.log(signInitialState.pageIndex)} */}
         </div>
         <div className="current-page-fix">
           <span onClick={onClickSignUp}></span>

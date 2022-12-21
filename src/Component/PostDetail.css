@@ -1,0 +1,10 @@
+.post-detail-form {
+  background-color: #fff;
+  width: 100%;
+  padding: 90px;
+  padding-left: 120px;
+}
+
+.post-detail-wrapper {
+  border: 1px solid #000;
+}
